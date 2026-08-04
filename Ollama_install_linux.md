@@ -4,7 +4,7 @@ Guide for understanding **what Ollama is**, **why you’d install it**, then how
 
 Includes **real outputs from this laptop** (WSL2) captured while writing these notes.
 
-Pair with: [OpenAI API vs ChatGPT](OpenAI_API_vs_ChatGPT_subscription.md) · hands-on script [`Test_ollama_with_OPENAI.py`](PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py)
+Pair with: [OpenAI API vs ChatGPT](OpenAI_API_vs_ChatGPT_subscription.md) · hands-on script [`Test_ollama_with_OPENAI.py`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py)
 
 ---
 
@@ -196,7 +196,7 @@ NAME            ID              SIZE      MODIFIED
 qwen2.5:1.5b    65ec06548149    986 MB    2 hours ago
 ```
 
-Currently this machine has **`qwen2.5:1.5b`** (used by [`Test_ollama_with_OPENAI.py`](PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py)), not `llama3` yet.
+Currently this machine has **`qwen2.5:1.5b`** (used by [`Test_ollama_with_OPENAI.py`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py)), not `llama3` yet.
 
 ---
 
@@ -258,6 +258,31 @@ On this laptop you can also run the model you already have:
 ollama run qwen2.5:1.5b
 ```
 
+### Important: `ollama run` is optional for Python
+
+`ollama run` is only for **direct interactive chat** in the terminal (you type, it replies).
+
+If you already have:
+
+1. **Model pulled** — `ollama pull …` then `ollama list` shows it  
+2. **Server running** — `ollama serve` (or Ollama already up; `curl http://localhost:11434` works)
+
+…then you do **not** need `ollama run` to test from Python.
+
+Your Python script talks to the **same local API** (`http://localhost:11434`). Ollama loads the model when the API request arrives and answers in your script’s output.
+
+| Goal | Need `ollama run`? |
+|------|--------------------|
+| Chat yourself in the terminal | **Yes** |
+| Run `Test_ollama_with_OPENAI.py` (or any API client) | **No** — serve + pulled model is enough |
+
+Think of it like this:
+
+- `ollama serve` = the restaurant kitchen is open  
+- `ollama pull` / `ollama list` = the dish is on the menu  
+- `ollama run` = you sit at the counter and order by hand  
+- Python script = an app places the same order via the kitchen’s API — no counter seat needed  
+
 ---
 
 ## 10) See currently loaded / running models
@@ -288,14 +313,15 @@ NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL
 | List downloaded models | `ollama list` |
 | OS processes | `ps aux \| grep ollama` |
 | Download LLaMA 3 | `ollama pull llama3` |
-| Chat with model | `ollama run llama3` |
+| Chat with model (interactive) | `ollama run llama3` — optional if you only use Python |
+| Call model from Python | Server up + model in `ollama list` (no `ollama run`) |
 | Loaded models | `ollama ps` |
 
 ---
 
 ## How this connects to your Python learning files
 
-Your script [`PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py`](PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py) talks to the same local server:
+Your script [`1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py) talks to the same local server:
 
 ```python
 openai = OpenAI(base_url='http://localhost:11434/v1', api_key='ollama')
@@ -304,17 +330,18 @@ openai = OpenAI(base_url='http://localhost:11434/v1', api_key='ollama')
 Requirements for that script:
 
 1. `ollama serve` (or Ollama already running)
-2. Model pulled (this laptop uses `qwen2.5:1.5b`)
-3. Conda env:
+2. Model pulled (this laptop uses `qwen2.5:1.5b`) — confirm with `ollama list`
+3. Conda env
+4. **`ollama run` is not required** — that is only for interactive terminal chat
 
 ```bash
 source ~/miniforge3/bin/activate
 conda activate my-proj
 cd /home/soudas/PERSONAL/AI_LEARNING/AI_LEARNING
-python PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py
+python 1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py
 ```
 
-More detail: [`Test_ollama_with_OPENAI.md`](PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.md)
+More detail: [`Test_ollama_with_OPENAI.md`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.md)
 
 ---
 
@@ -341,4 +368,4 @@ Captured for these notes:
 | API check | `Ollama is running` |
 | Downloaded model | `qwen2.5:1.5b` (~986 MB) |
 | Models dir | `~/.ollama/models` |
-| Python test model name | `qwen2.5:1.5b` in [`Test_ollama_with_OPENAI.py`](PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py) |
+| Python test model name | `qwen2.5:1.5b` in [`Test_ollama_with_OPENAI.py`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py) |

@@ -5,7 +5,7 @@ Basics note (repo root): what the **Python `openai` package** is, what **OpenAI 
 Pair with:
 
 - [Ollama install on Linux](Ollama_install_linux.md) (also at repo root)
-- Hands-on scripts in [`PRACTICE_ON_OLLAMA_and_OPENAI/`](PRACTICE_ON_OLLAMA_and_OPENAI/)
+- Hands-on scripts in [`1_PRACTICE_ON_OLLAMA_and_OPENAI/`](1_PRACTICE_ON_OLLAMA_and_OPENAI/)
 
 Official links (always check these for latest prices):
 
@@ -80,8 +80,8 @@ Loads `OPENAI_API_KEY` from `.env` so you don’t hardcode it.
 
 Try both in this repo:
 
-- Cloud: [`Test_OPENAI_LLM_with_openAI.py`](PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.py)
-- Ollama: [`Test_ollama_with_OPENAI.py`](PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py)
+- Cloud: [`Test_OPENAI_LLM_with_openAI.py`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.py)
+- Ollama: [`Test_ollama_with_OPENAI.py`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py)
 
 ---
 
@@ -130,7 +130,7 @@ Or only API credits if you only care about coding.
 3. They send the answer back
 4. They charge based on how many **tokens** you used
 
-Contrast with Ollama (local scripts in `PRACTICE_ON_OLLAMA_and_OPENAI/`):
+Contrast with Ollama (local scripts in `1_PRACTICE_ON_OLLAMA_and_OPENAI/`):
 
 | | OpenAI Cloud | Ollama (local) |
 |--|--------------|----------------|
@@ -161,7 +161,7 @@ Do this once before running the cloud Python script:
 OPENAI_API_KEY=<your_openai_api_key_here>
 ```
 
-`load_dotenv()` reads `.env` from the **current working directory**, so either run the script from the repo root, copy/symlink `.env` into `PRACTICE_ON_OLLAMA_and_OPENAI/`, or point `load_dotenv` at that path.
+`load_dotenv()` reads `.env` from the **current working directory**, so either run the script from the repo root, copy/symlink `.env` into `1_PRACTICE_ON_OLLAMA_and_OPENAI/`, or point `load_dotenv` at that path.
 
 6. Install packages in your conda env:
 
@@ -243,10 +243,10 @@ For personal learning with `gpt-4.1-nano`, many small test runs cost **fractions
 | [OpenAI_API_vs_ChatGPT_subscription.md](OpenAI_API_vs_ChatGPT_subscription.md) | repo root | **This file** — package + cloud + subscription overview |
 | [Ollama_install_linux.md](Ollama_install_linux.md) | repo root | Install / serve / pull / run Ollama |
 | [README.md](README.md) | repo root | Front door / start here |
-| [Test_OPENAI_LLM_with_openAI.py](PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.py) | `PRACTICE_ON_OLLAMA_and_OPENAI/` | OpenAI **cloud API** (`OPENAI_API_KEY`) |
-| [Test_OPENAI_LLM_with_openAI.md](PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.md) | `PRACTICE_ON_OLLAMA_and_OPENAI/` | Line-by-line cloud script notes |
-| [Test_ollama_with_OPENAI.py](PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py) | `PRACTICE_ON_OLLAMA_and_OPENAI/` | Local Ollama via OpenAI-compatible API |
-| [Test_ollama_with_OPENAI.md](PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.md) | `PRACTICE_ON_OLLAMA_and_OPENAI/` | Line-by-line Ollama script notes |
+| [Test_OPENAI_LLM_with_openAI.py](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.py) | `1_PRACTICE_ON_OLLAMA_and_OPENAI/` | OpenAI **cloud API** (`OPENAI_API_KEY`) |
+| [Test_OPENAI_LLM_with_openAI.md](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.md) | `1_PRACTICE_ON_OLLAMA_and_OPENAI/` | Line-by-line cloud script notes |
+| [Test_ollama_with_OPENAI.py](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py) | `1_PRACTICE_ON_OLLAMA_and_OPENAI/` | Local Ollama via OpenAI-compatible API |
+| [Test_ollama_with_OPENAI.md](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.md) | `1_PRACTICE_ON_OLLAMA_and_OPENAI/` | Line-by-line Ollama script notes |
 
 ---
 
@@ -257,7 +257,7 @@ For personal learning with `gpt-4.1-nano`, many small test runs cost **fractions
 3. Don’t print your full API key in real projects (the test script may print it only for learning/debug).
 4. Watch usage on [platform.openai.com](https://platform.openai.com) → billing / usage.
 5. Set a spending limit if the platform offers one.
-6. For zero cloud cost while learning code structure, use [`Test_ollama_with_OPENAI.py`](PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py) first.
+6. For zero cloud cost while learning code structure, use [`Test_ollama_with_OPENAI.py`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py) first.
 
 ---
 
@@ -281,7 +281,7 @@ For personal learning with `gpt-4.1-nano`, many small test runs cost **fractions
 source ~/miniforge3/bin/activate
 conda activate my-proj
 cd /home/soudas/PERSONAL/AI_LEARNING/AI_LEARNING
-python PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.py
+python 1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.py
 ```
 
 Running from the repo root helps `load_dotenv()` find `.env` there.

@@ -225,7 +225,7 @@ Run from the **repo root** so `load_dotenv()` finds `.env` there:
 source ~/miniforge3/bin/activate
 conda activate my-proj
 cd /home/soudas/PERSONAL/AI_LEARNING/AI_LEARNING
-python PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.py
+python 1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.py
 ```
 
 ---
