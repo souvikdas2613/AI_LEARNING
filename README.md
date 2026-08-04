@@ -9,12 +9,12 @@ Personal notes and small experiments for OpenAI Cloud vs local Ollama.
 
 ## Hands-on scripts
 
-Folder: [`PRACTICE_ON_OLLAMA_and_OPENAI/`](PRACTICE_ON_OLLAMA_and_OPENAI/)
+Folder: [`1_PRACTICE_ON_OLLAMA_and_OPENAI/`](1_PRACTICE_ON_OLLAMA_and_OPENAI/)
 
 | Script | Notes |
 |--------|--------|
-| [`Test_OPENAI_LLM_with_openAI.py`](PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.py) · [md](PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.md) | Call OpenAI cloud (`gpt-4.1-nano`) |
-| [`Test_ollama_with_OPENAI.py`](PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py) · [md](PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.md) | Call local Ollama via OpenAI-compatible API |
+| [`Test_OPENAI_LLM_with_openAI.py`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.py) · [md](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.md) | Call OpenAI cloud (`gpt-4.1-nano`) |
+| [`Test_ollama_with_OPENAI.py`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py) · [md](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.md) | Call local Ollama via OpenAI-compatible API |
 
 ## Run (this laptop)
 

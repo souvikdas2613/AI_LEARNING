@@ -203,7 +203,7 @@ No cloud OpenAI call. No real API key needed for this script.
 source ~/miniforge3/bin/activate
 conda activate my-proj
 cd /home/soudas/PERSONAL/AI_LEARNING/AI_LEARNING
-python PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py
+python 1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py
 ```
 
 Ollama must already be running (`ollama serve` or the Ollama app).
