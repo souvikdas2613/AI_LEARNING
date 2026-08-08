@@ -1,9 +1,149 @@
-# LLM — Large Language Model Overview
+# What Is an LLM?
 
-Personal notes transcribed from an LLM comparison infographic (2025 edition).  
-Useful as a map of **closed (proprietary)** vs **open-source** model families — not a live pricing or capability ranking.
+Personal learning notes: what an LLM is, how you use one, then a map of **closed** vs **open-source** model families.
+
+Also in this folder: [`what_are_tokens.md`](./what_are_tokens.md) — character → word → token (how LLMs read text).
 
 > Snapshot era: ~2024–2025. Names and context windows change often; always check the vendor docs for current models (e.g. `gpt-4.1-nano`, Claude 4, Gemini 2.x, Llama 4).
+
+---
+
+## What is an LLM?
+
+An **LLM** (**Large Language Model**) is a type of **AI program** that can **recognize and generate text** (and often related tasks: answer questions, summarize, translate, chat, recommend).
+
+It is called **“large”** because it is trained on **huge sets of data** — often text gathered from the internet at enormous scale (many gigabytes to far more). From enough examples, the model learns patterns in human language (and other complex data) so it can interpret prompts and produce fluent replies.
+
+**Under the hood (same idea as before):** it predicts the **next token** in a sequence. That simple skill powers chat, summarization, coding help, and more.
+
+| Piece | Plain meaning |
+|-------|----------------|
+| **Large** | Huge training data + (usually) billions of parameters |
+| **Language** | Understands / generates human language (and often code); some are multimodal |
+| **Model** | Learned function: input tokens → next-token probabilities → generated reply |
+
+**In practice:** you send a prompt (and often a system message); the model generates a continuation — answers, summaries, code — one token at a time.
+
+### Where LLMs sit in the AI map
+
+```
+AI
+ └── Machine learning / deep learning
+      └── Foundation models
+           └── Large language models (LLMs)
+                └── Often used as generative AI (new text, etc.)
+```
+
+- LLMs are a **subset of deep learning**.
+- LLMs are also often described as a **subset of foundation models** — general-purpose models pre-trained at scale, then reused or specialized.
+- **Generative AI** is AI that can **produce new content** (text, images, audio, synthetic data). Many LLM apps (ChatGPT, Gemini chat) are generative AI products built on LLMs.
+
+The largest and most capable LLMs today are often **GPTs** — **G**enerative **P**retrained **T**ransformers — used inside generative chatbots like **ChatGPT** or **Gemini**.
+
+### Pre-trained vs fine-tuned
+
+LLMs are typically **general-purpose language models** that are:
+
+1. **Pre-trained** — learned language patterns from massive internet-scale (and other) text by predicting next tokens / similar objectives. After this you already have a strong “foundation” model you can prompt.
+2. **Fine-tuned** (optional) — further trained on narrower data for a **specific purpose** (support bot style, domain jargon, safer replies, etc.).
+
+Example vibe: models like **Gemini** (multimodal) or dialog-focused systems ingest very large multi-source data, build a foundation language model, then you use it by **asking a question** — typed or spoken into a prompt.
+
+### Not the same as
+
+| Term | Difference |
+|------|------------|
+| **ChatGPT / Claude.ai / Gemini app** | *Products* (chat UIs) built **on top of** LLMs |
+| **OpenAI API / Ollama** | *Ways to call* an LLM from code |
+| **Tokenizer** | Splits text into tokens before the model sees it — see [`what_are_tokens.md`](./what_are_tokens.md) |
+| **Generative AI** | Broader umbrella (text *and* images/audio/…); LLMs are a major part of it |
+
+Examples of LLMs: GPT-4 / `gpt-4.1-nano`, Claude, Gemini, Llama, Qwen, Mistral.
+
+---
+
+## LLMs and the Transformer
+
+Most modern LLMs are built on the **Transformer** — a neural-network architecture that is especially good at **understanding context** in language.
+
+- **Self-attention** lets the model look at relationships across a sequence (which words relate to which), not just the last few words.
+- That is why Transformers usually grasp context better than older sequence models for language tasks.
+- **GPT** in “Generative Pretrained Transformer” means the model family is Transformer-based.
+
+You do not need the full math yet — remember: **LLM ≈ (usually) a big Transformer trained to predict tokens.**
+
+---
+
+## Parameters in an LLM
+
+Very fundamental to an LLM: the number of **parameters** inside the model.
+
+**Parameters are also called weights.**  
+Generally they are synonymous. There is a detail that they are not *exactly* the same in some situations, but basically think of **weights and parameters as the same thing**.
+
+**Model weights** are the **levers** within a model that control what kinds of outputs it generates when it is given some inputs. They determine how the model predicts the **next word** (next token) that will follow.
+
+These weights are **set when you train** an LLM. The model sees lots and lots of examples and uses those examples to **adjust its weights** until it gets better and better at predicting the next token. (Tokens: see [`what_are_tokens.md`](./what_are_tokens.md).)
+
+The way the model improves is by adjusting all of its weights. If you already know data science, this will feel familiar. If you are new to it, keep this intuition: **parameters/weights control the output** — training is the process of tuning those levers from examples.
+
+Rough public scale for GPT generations:
+
+| Model | Parameters (approx.) |
+|-------|----------------------|
+| GPT-2 | ~1.5 billion |
+| GPT-3 | ~175 billion |
+| GPT-4 | Not officially published (estimates vary; treat huge exact claims carefully) |
+
+When you see **`qwen2.5:1.5b`** in Ollama, the **`1.5b`** is about parameter scale (1.5 billion) — small enough for a laptop.
+
+---
+
+## Types of LLMs (how they are tuned)
+
+There are three common *kinds* of language models by **how they were trained to respond**. Each wants prompts a bit differently.
+
+| Type | Trained to… | Prompt vibe | Example tasks |
+|------|-------------|-------------|----------------|
+| **Generic (base) language model** | Predict the **next word/token** from training-style text | Continuation / completion | “Once upon a time…” → keeps writing |
+| **Instruction-tuned** | Follow an **instruction** in the input | Clear commands | Summarize X, translate X, classify sentiment of X, write a poem in style of X |
+| **Dialog-tuned (chat)** | Produce the **next reply in a conversation** | Chat / Q&A turns | Chatbots; usually a special case of instruction-tuning framed as dialogue |
+
+What you use daily (ChatGPT, Claude, your API `messages` with system + user) is usually **instruction- and/or dialog-tuned**, not a raw base model.
+
+---
+
+## Examples of LLMs (quick tour)
+
+Names change fast; this is a **recognition list**, not a ranking.
+
+### Closed / product-side (you call via UI or API)
+
+| Name | Org | One-line note |
+|------|-----|----------------|
+| **GPT-3 / GPT-3.5 / GPT-4** family | OpenAI | Classic GPT line; ChatGPT is the *product* on top; APIs expose models like `gpt-4.1-nano` |
+| **Claude** | Anthropic | Strong chat / assistant models (closed weights) |
+| **Gemini** (earlier consumer name **Bard**) | Google | Multimodal chat + APIs; long-context variants |
+| **PaLM 2** | Google | Earlier Google LLM line used inside Google products |
+| **Command R+** | Cohere | Strong for RAG-style retrieval apps |
+| **Grok** | xAI | Tied to X (Twitter) product |
+
+Older / specialized names you may still see: **BERT** (encoder, great at understanding tasks), **T5** (text-to-text), **LaMDA** (dialogue-oriented), **Turing NLG** (Microsoft).
+
+### Open-weight / open-source side (often run with Ollama)
+
+| Name | Org | One-line note |
+|------|-----|----------------|
+| **Llama / LLaMA 3.x** | Meta | Flagship open-weight family |
+| **Mistral / Mixtral** | Mistral | Fast dense + strong MoE open models |
+| **Qwen** | Alibaba Cloud | Strong code & chat; good Ollama picks |
+| **Gemma** | Google | Smaller open models |
+| **Phi / Phi-3** | Microsoft | Small, capable open models |
+| **BLOOM**, **GPT-J**, **Falcon**, **RoBERTa** | Various | Earlier open / research lines you may see in docs |
+
+**Coding helper:** GitHub **Copilot** is LLM-powered assistance for **code**, not a general chat product like ChatGPT.
+
+Full comparison tables (params, context, license) are below.
 
 ---
 
@@ -29,7 +169,7 @@ Important nuances:
 
 - **Frontier ≠ always closed.** Most frontier models today are closed (GPT / Claude / Gemini flagships), but strong open releases (e.g. top Llama / Mixtral / Qwen variants) are often called the **open-source frontier**.
 - **Frontier shifts over time.** Yesterday’s frontier becomes today’s mid-tier as newer models ship.
-- **“Open-source frontier”** (as in the poster) means the **best open-weight families** people actually pull and run locally — Llama, Mixtral, Qwen, Gemma, Phi — not every small research model ever published.
+- **“Open-source frontier”** means the **best open-weight families** people actually pull and run locally — Llama, Mixtral, Qwen, Gemma, Phi — not every small research model ever published.
 
 | Term | Short meaning |
 |------|----------------|
@@ -42,7 +182,7 @@ Important nuances:
 
 ## Three ways to use models
 
-From Day 2 (Open-Source LLMs: LLaMA, Mistral, DeepSeek, and Ollama): there are **three common ways** to talk to an LLM. Same idea of “ask a model / get text back” — different packaging.
+There are **three common ways** to talk to an LLM. Same idea of “ask a model / get text back” — different packaging.
 
 ```
 ┌─────────────────┐   ┌─────────────────┐   ┌─────────────────┐
@@ -196,12 +336,3 @@ These are the families you typically pull with **Ollama** for local practice.
 | **Local open weights** | Llama, Qwen, Mistral, Gemma, Phi | Ollama + `Test_ollama_with_OPENAI.py` |
 
 For cheap cloud experiments you already use something like **`gpt-4.1-nano`** (newer than the GPT-4 rows in this chart). For free local runs, pick a small open model (e.g. **Qwen** / **Gemma** / **Phi**-class sizes that fit your machine).
-
----
-
-## Source
-
-- “LLM LARGE LANGUAGE MODEL” comparison poster (closed vs open-source tables)  
-- Course slide: **Three ways to use models** (Day 2 — Open-Source LLMs / Ollama)  
-
-Treat as a learning snapshot, not official vendor documentation.

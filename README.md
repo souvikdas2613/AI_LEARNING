@@ -4,8 +4,10 @@ Personal notes and small experiments for OpenAI Cloud vs local Ollama.
 
 ## Start here
 
-1. [OpenAI API vs ChatGPT subscription](OpenAI_API_vs_ChatGPT_subscription.md) — package, cloud API, billing vs ChatGPT plans  
-2. [Ollama install on Linux](Ollama_install_linux.md) — what Ollama is, why use it, then install / serve / pull / run
+1. [What is an LLM?](3_LLM/what_is_an_llm.md) — definition, generative AI, closed vs open, how to use models  
+2. [What are tokens?](3_LLM/what_are_tokens.md) — character → word → token  
+3. [OpenAI API vs ChatGPT subscription](OpenAI_API_vs_ChatGPT_subscription.md) — package, cloud API, billing vs ChatGPT plans  
+4. [Ollama install on Linux](Ollama_install_linux.md) — what Ollama is, why use it, then install / serve / pull / run
 
 ## Hands-on scripts
 
