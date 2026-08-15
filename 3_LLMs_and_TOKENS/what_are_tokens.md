@@ -109,3 +109,13 @@ So the context window must fit:
 **API cost** is usually priced **per million tokens** (input + output), so short queries stay cheap; long scraped pages + long chats burn more of the window and the budget.
 
 Your website summarizer truncates scrape text to ~2,000 **characters** as a simple safety limit — the model’s real limit is still measured in **tokens** inside the context window.
+
+---
+
+## Next: Hugging Face tokenizers (Colab)
+
+This folder covers token **ideas** + OpenAI **tiktoken** (`PRACTICE_TOKENS.py`).
+
+For **Hugging Face `AutoTokenizer`** (Hub models, encode/decode, compare tokenizers), use:
+
+[`../7_HUGGING_FACE/colab_tokenizers_explained.ipynb`](../7_HUGGING_FACE/colab_tokenizers_explained.ipynb)

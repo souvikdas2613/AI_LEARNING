@@ -413,7 +413,6 @@ Open that URL → type in the **input** box → Submit → see the answer in the
 ## How to run
 
 ```bash
-conda activate my-proj
 python 01_gpt_chat.py
 ```
 
@@ -435,6 +434,6 @@ Stop with `Ctrl+C`.
 ## Tiny experiments to try
 
 1. Change `system_message` to `"Answer in one short sentence only"`
-2. Change `outputs="textbox"` to a Markdown output later (day2 style)
+2. Change `outputs="textbox"` to a Markdown output later
 3. Remove the `print(message_gpt(...))` line and use only the UI
 4. Add `inbrowser=True` inside `.launch(...)` so the browser opens automatically

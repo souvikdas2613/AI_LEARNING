@@ -2,7 +2,7 @@
 
 Companion notes for `LLM_CALL_STATELESS_NO_MEMORY.py`.
 
-Inspired by the Day 4 idea: ChatGPT *feels* like it remembers you — but each API call starts from scratch unless **you** send the history again.
+Key idea: ChatGPT *feels* like it remembers you — but each API call starts from scratch unless **you** send the history again.
 
 ---
 

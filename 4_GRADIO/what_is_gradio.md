@@ -4,11 +4,9 @@ Personal learning notes: what Gradio is, why people use it with LLMs, and how a 
 
 Companion script in this folder: [`01_gpt_chat.py`](./01_gpt_chat.py) · line-by-line walkthrough: [`01_gpt_chat.md`](./01_gpt_chat.md)
 
-Based on Udemy LLM Engineering **week2 / day2**.
-
 ---
 
-## Course intro (why Gradio exists)
+## Why Gradio exists
 
 If you have experience with front-end development or have dabbled in it, you know that setting up a React app or similar involves a lot of **boilerplate code**. However, with models, we do not need to do that. We can build a user interface **super quickly**, and that is exactly what we will do today.
 
@@ -156,16 +154,274 @@ http://127.0.0.1:7860
 
 Open that in a browser. Stop the app with `Ctrl+C` in the terminal.
 
-Useful options you will see in day2:
+---
 
-| Option | What it does |
-|--------|----------------|
-| `launch()` | Local only (this machine) |
-| `launch(inbrowser=True)` | Also opens the browser automatically |
-| `launch(share=True)` | Creates a temporary public Gradio link (tunnel) |
-| `launch(auth=("user", "pass"))` | Simple password gate |
+## Launch options (good to know)
 
-> Note: `share=True` can be blocked by antivirus / company networks. Skip it if it errors.
+These are optional knobs on `.launch(...)` or `gr.Interface(...)`. You do **not** need them for the basic GPT chat app. Useful knowledge.
+
+### Open browser automatically
+
+```python
+gr.Interface(fn=shout, inputs="textbox", outputs="textbox", flagging_mode="never").launch(inbrowser=True)
+```
+
+| Piece | Meaning |
+|-------|---------|
+| `inbrowser=True` | Gradio opens a new browser tab/window for you |
+
+Without it, Gradio still runs — you just copy/open the printed URL yourself.
+
+### Public share link
+
+```python
+gr.Interface(fn=shout, inputs="textbox", outputs="textbox", flagging_mode="never").launch(share=True)
+```
+
+| Piece | Meaning |
+|-------|---------|
+| `share=True` | Creates a temporary **public** Gradio URL (tunnel) so others can open your demo |
+
+Notes:
+
+- Cool for quick demos / sharing with someone else
+- Uses HTTP tunneling (similar idea to ngrok)
+- Some antivirus tools and company networks **block** this
+- If it errors at work, just skip it and use local URL only
+- More permanent hosting later: **Hugging Face Spaces**
+
+### Authentication (simple username + password)
+
+```python
+gr.Interface(
+    fn=shout,
+    inputs="textbox",
+    outputs="textbox",
+    flagging_mode="never",
+).launch(inbrowser=True, auth=("ed", "bananas"))
+```
+
+| Piece | Meaning |
+|-------|---------|
+| `auth=("ed", "bananas")` | Browser asks for userid + password before showing the app |
+| `"ed"` | example username |
+| `"bananas"` | example password |
+
+What to remember:
+
+- Gradio makes basic login **very easy**
+- This is fine for a quick private demo
+- For anything real, **do not hardcode passwords in code** — at minimum put them in `.env`
+- This is a simple gate, not full production security
+
+Example idea with `.env`:
+
+```python
+# concept only — read user/pass from environment instead of hardcoding
+auth=(os.getenv("GRADIO_USER"), os.getenv("GRADIO_PASS"))
+```
+
+### Dark mode vs light mode
+
+By default, Gradio follows **your computer / browser theme**:
+
+- OS/browser in dark → Gradio often looks dark
+- OS/browser in light → Gradio often looks light
+
+That is why two people can run the same code and see different themes.
+
+#### Forcing dark mode (optional)
+
+Gradio **recommends against** forcing a theme, because theme should stay a **user preference** (especially for accessibility).  
+But if you want to force dark mode anyway, here is the pattern:
+
+```python
+# Define this JS snippet, then pass js=force_dark_mode when creating the Interface
+
+force_dark_mode = """
+function refresh() {
+    const url = new URL(window.location);
+    if (url.searchParams.get('__theme') !== 'dark') {
+        url.searchParams.set('__theme', 'dark');
+        window.location.href = url.href;
+    }
+}
+"""
+
+gr.Interface(
+    fn=shout,
+    inputs="textbox",
+    outputs="textbox",
+    flagging_mode="never",
+    js=force_dark_mode,
+).launch()
+```
+
+What this does (plain English):
+
+1. Small JavaScript runs in the browser
+2. Checks the page URL for `__theme=dark`
+3. If missing, reloads the page with `__theme=dark`
+4. Gradio then renders in dark mode
+
+| Piece | Meaning |
+|-------|---------|
+| `js=force_dark_mode` | Extra browser JS attached to the Interface |
+| `__theme=dark` | Gradio’s URL switch for dark theme |
+
+**Learning takeaway:** default = follow user settings. Force dark only if you really want a fixed look for demos/screenshots.
+
+### Quick cheat sheet
+
+| Option | Where | What it does |
+|--------|--------|----------------|
+| `launch()` | `.launch()` | Local only |
+| `inbrowser=True` | `.launch(...)` | Auto-open browser |
+| `share=True` | `.launch(...)` | Temporary public link |
+| `auth=("user", "pass")` | `.launch(...)` | Simple login gate |
+| `js=force_dark_mode` | `gr.Interface(...)` | Force dark theme via URL |
+| `flagging_mode="never"` | `gr.Interface(...)` | Hide Flag button |
+
+---
+
+## Custom widgets: `inputs=[...]` and `outputs=[...]`
+
+So far the simple form is:
+
+```python
+inputs="textbox"
+outputs="textbox"
+```
+
+That works. Next you can build a **nicer UI** by creating widgets yourself and passing them as **lists**:
+
+```python
+inputs=[message_input]
+outputs=[message_output]
+```
+
+### Why lists?
+
+| Style | When |
+|-------|------|
+| `inputs="textbox"` | One simple input, Gradio picks defaults |
+| `inputs=[message_input]` | One input, but **you** control label / lines / hint |
+| `inputs=[box1, box2]` | Two inputs → maps to two function arguments |
+
+Same idea for `outputs`.
+
+### Example 1 — Shout with custom textboxes
+
+```python
+message_input = gr.Textbox(
+    label="Your message:",
+    info="Enter a message to be shouted",
+    lines=7,
+)
+message_output = gr.Textbox(label="Response:", lines=8)
+
+view = gr.Interface(
+    fn=shout,
+    title="Shout",
+    inputs=[message_input],
+    outputs=[message_output],
+    examples=["hello", "howdy"],
+    flagging_mode="never",
+)
+view.launch()
+```
+
+| Piece | Meaning |
+|-------|---------|
+| `gr.Textbox(...)` | Create a text box widget object |
+| `label=` | Title shown above the box |
+| `info=` | Small help text under the label |
+| `lines=` | How tall the box is |
+| `inputs=[message_input]` | Use **this** widget as the input |
+| `outputs=[message_output]` | Use **this** widget as the output |
+| `title="Shout"` | App title at the top of the page |
+| `examples=[...]` | Clickable sample prompts under the UI |
+| `view = gr.Interface(...)` then `view.launch()` | Same as chaining `.launch()`, just stored in a variable |
+
+### Example 2 — Same UI pattern, but `fn=message_gpt`
+
+```python
+message_input = gr.Textbox(
+    label="Your message:",
+    info="Enter a message for GPT-4.1-mini",
+    lines=7,
+)
+message_output = gr.Textbox(label="Response:", lines=8)
+
+view = gr.Interface(
+    fn=message_gpt,
+    title="GPT",
+    inputs=[message_input],
+    outputs=[message_output],
+    examples=["hello", "howdy"],
+    flagging_mode="never",
+)
+view.launch()
+```
+
+Only `fn` and title/info text changed. The input/output wiring is the same.
+
+### Example 3 — Output as Markdown (nicer for LLM replies)
+
+```python
+system_message = "You are a helpful assistant that responds in markdown without code blocks"
+
+message_input = gr.Textbox(
+    label="Your message:",
+    info="Enter a message for GPT-4.1-mini",
+    lines=7,
+)
+message_output = gr.Markdown(label="Response:")
+
+view = gr.Interface(
+    fn=message_gpt,
+    title="GPT",
+    inputs=[message_input],
+    outputs=[message_output],
+    examples=[
+        "Explain the Transformer architecture to a layperson",
+        "Explain the Transformer architecture to an aspiring AI engineer",
+    ],
+    flagging_mode="never",
+)
+view.launch()
+```
+
+| Output type | Looks like |
+|-------------|------------|
+| `gr.Textbox` | Plain text |
+| `gr.Markdown` | Formatted markdown (headings, bold, lists) |
+
+### Simple vs custom — side by side
+
+```python
+# Simple (our 01_gpt_chat.py style)
+gr.Interface(fn=message_gpt, inputs="textbox", outputs="textbox", flagging_mode="never").launch()
+
+# Custom widgets (richer style)
+gr.Interface(
+    fn=message_gpt,
+    title="GPT",
+    inputs=[message_input],
+    outputs=[message_output],
+    examples=["hello", "howdy"],
+    flagging_mode="never",
+).launch()
+```
+
+Same wiring rule as before:
+
+```
+inputs  ↔ function arguments
+outputs ↔ function return value
+```
+
+You only gained control over labels, size, examples, and output format.
 
 ---
 
@@ -183,23 +439,93 @@ Gradio is the **front door**. The LLM is the **brain** behind the door.
 
 ---
 
-## Day2 learning path (simple → richer)
+## `gr.Interface` vs `gr.ChatInterface`
 
-1. **Pure Python function** — `shout(text)` returns uppercase (no LLM)
-2. **Gradio Interface** — same function, now in a browser
-3. **Swap fn to GPT** — `message_gpt(prompt)` talks to OpenAI
-4. **Better output** — Markdown instead of plain textbox
-5. **Streaming** — show tokens as they arrive (`yield`)
-6. **Chat UI** — multi-turn chat with history (`ChatInterface`)
+These are the two Gradio UIs you use most in this folder.  
+They are **not** the same.
 
-This folder starts at steps 2–3 with [`01_gpt_chat.py`](./01_gpt_chat.py).
+### `gr.Interface` — simple form UI
+
+Best for: **one input → one output** (like a form).
+
+```python
+gr.Interface(
+    fn=message_gpt,
+    inputs="textbox",
+    outputs="textbox",
+    flagging_mode="never",
+).launch()
+```
+
+| Piece | Meaning |
+|-------|---------|
+| `fn=` | Your function (e.g. `message_gpt(prompt)`) |
+| `inputs=` | Widget(s) for function **arguments** |
+| `outputs=` | Widget(s) for function **return value** |
+
+Looks like: type in a box → Submit → see answer in another box.  
+**No chat memory** unless you build it yourself.
+
+Used in: [`01_gpt_chat.py`](./01_gpt_chat.py)
+
+### `gr.ChatInterface` — chat bubble UI
+
+Best for: **multi-turn chat** (like ChatGPT).
+
+```python
+gr.ChatInterface(fn=chat).launch()
+```
+
+| Piece | Meaning |
+|-------|---------|
+| `fn=` | Your chat function, usually `chat(message, history)` |
+| `message` | New text the user just typed (Gradio passes this) |
+| `history` | Earlier turns already on screen (Gradio passes this) |
+
+Looks like: chat bubbles, Send button, conversation grows.  
+Gradio keeps **history** and passes it into your function each time.
+
+Used in: [`gradio_chatbot.py`](./gradio_chatbot.py)
+
+### Side by side
+
+| | `gr.Interface` | `gr.ChatInterface` |
+|---|----------------|---------------------|
+| UI style | Form (textbox in / out) | Chat bubbles |
+| Typical function | `fn(prompt)` | `fn(message, history)` |
+| Memory | No (one shot) | Yes (Gradio sends history) |
+| You set `inputs=` / `outputs=` | Yes | Usually no — chat UI is built-in |
+| Good for | Single Q&A, demos | Real chatbot |
+
+### Tiny mental model
+
+```text
+gr.Interface      →  form page
+gr.ChatInterface  →  chat page
+```
+
+Same idea underneath: Gradio calls **your Python function**.  
+Only the UI shape and arguments differ.
+
+### Gradio 6 chatbot tip
+
+On Gradio 6.x use:
+
+```python
+gr.ChatInterface(fn=chat).launch()
+```
+
+Do **not** pass `type="messages"` (removed in Gradio 6; older Gradio 5 examples sometimes still show it).
+
+More detail on `message` / `history`: [`gradio_chatbot.md`](./gradio_chatbot.md)
 
 ---
+
+## Learning path (simple → richer)
 
 ## How to run
 
 ```bash
-conda activate my-proj
 python 01_gpt_chat.py
 ```
 
@@ -214,8 +540,3 @@ Needs `.env` with `OPENAI_API_KEY` and `MODEL_NAME`.
 |------|---------|
 | [`01_gpt_chat.md`](./01_gpt_chat.md) | Every line of `01_gpt_chat.py` explained |
 | [`01_gpt_chat.py`](./01_gpt_chat.py) | The actual script |
-
-Also related from earlier folders:
-
-- System vs user prompts — `2_USER_PROMPT_SYSTEM_PROMPT/`
-- What an LLM is — `3_LLMs_and_TOKENS/what_is_an_llm.md`
