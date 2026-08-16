@@ -38,3 +38,5 @@ Thumbs.db
 # Local / misc
 *.log
 .cache/
+env
+github_gitlab_PAT_tokens.txt
