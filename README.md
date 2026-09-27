@@ -1,4 +1,3 @@
-
 # Welcome to the learning journey with **Souvik**
 
 This is **Souvik’s** personal AI learning space — notes, practice scripts, and small experiments while exploring LLMs, prompts, Gradio, and more.
@@ -22,6 +21,8 @@ If you are new to AI and feel lost in big words, this journey is for you.
 - use **Google Colab** — cloud notebooks + GPUs for heavier model experiments
 - learn **quantization** — load big models with fewer bits (8-bit / 4-bit)
 - try **audio transcription** — free HF Whisper vs paid OpenAI API
+- use **RAG** — ground LLM answers in your own documents (retrieval + generation)
+- learn **LangChain** — models, prompts, indexes, memory, chains, and agents
 
 These notes are written in plain language, with step-by-step explanations, so beginners can follow along without fear.  
 If **Souvik** can learn it this way, you can too.
@@ -35,7 +36,7 @@ If **Souvik** can learn it this way, you can too.
 | 0 | [`0_WHAT_IS_AI`](0_WHAT_IS_AI/) | Basics — what AI / ML / DL / generative AI mean |
 | 1 | [`1_PRACTICE_ON_OLLAMA_and_OPENAI`](1_PRACTICE_ON_OLLAMA_and_OPENAI/) | First API calls — OpenAI cloud + local Ollama |
 | 2 | [`2_USER_PROMPT_SYSTEM_PROMPT`](2_USER_PROMPT_SYSTEM_PROMPT/) | System prompt vs user prompt |
-| 3 | [`3_LLMs_and_TOKENS`](3_LLMs_and_TOKENS/) | What an LLM is, tokens, stateless calls |
+| 3 | [`3_LLMs_and_TOKENS`](3_LLMs_and_TOKENS/) | What an LLM is, features, tokens, stateless calls |
 | 4 | [`4_GRADIO`](4_GRADIO/) | Gradio UIs + chatbot with chat history |
 | 5 | [`5_TOOLS_FUNCTIONS`](5_TOOLS_FUNCTIONS/) | LLM tools / function calling (FlightAI ticket price) |
 | 6 | [`6_AGENTS_AND_TOOLS`](6_AGENTS_AND_TOOLS/) | AI Agents, workflow patterns, frameworks, tools theory |
@@ -43,6 +44,9 @@ If **Souvik** can learn it this way, you can too.
 | 8 | [`8_GOOGLE_COLAB`](8_GOOGLE_COLAB/) | Google Colab — cloud notebooks, GPUs, secrets |
 | 9 | [`9_QUANTIZATION`](9_QUANTIZATION/) | Quantization — 8-bit / 4-bit, BitsAndBytes |
 | 10 | [`10_AUDIO_TRANSCRIPTION`](10_AUDIO_TRANSCRIPTION/) | Audio → text — free HF Whisper vs paid OpenAI |
+| 11 | [`11_PYTHON_CPP_CODE_CONVERSION`](11_PYTHON_CPP_CODE_CONVERSION/) | LLM ports Python → C++ (prompt + save `.cpp`) |
+| 12 | [`12_RAG_Retrieval_Augmented_Generation`](12_RAG_Retrieval_Augmented_Generation/) | RAG — read `1_` … `6_` (start [`1_introduction_to_rag.md`](12_RAG_Retrieval_Augmented_Generation/1_introduction_to_rag.md)) |
+| 13 | [`13_LANGCHAIN`](13_LANGCHAIN/) | LangChain — read `1_` … `9_` (start [`1_introduction_to_langchain.md`](13_LANGCHAIN/1_introduction_to_langchain.md)) |
 
 ### Topic 5 highlight
 
@@ -73,28 +77,36 @@ If **Souvik** can learn it this way, you can too.
 
 - Practice: [`colab_audio_transcription.ipynb`](10_AUDIO_TRANSCRIPTION/colab_audio_transcription.ipynb) — free HF Whisper vs paid `gpt-4o-mini-transcribe`  
 
+### Topic 11 highlight
+
+- Script: [`python_code_to_CPP_code_Conversion.py`](11_PYTHON_CPP_CODE_CONVERSION/python_code_to_CPP_code_Conversion.py)  
+- Notes: [`python_code_to_CPP_code_Conversion.md`](11_PYTHON_CPP_CODE_CONVERSION/python_code_to_CPP_code_Conversion.md)  
+
+### Topic 12 highlight
+
+- Read in order **`1_` → `6_`** in [`12_RAG_Retrieval_Augmented_Generation/`](12_RAG_Retrieval_Augmented_Generation/)  
+- [`1_introduction_to_rag.md`](12_RAG_Retrieval_Augmented_Generation/1_introduction_to_rag.md) — what an **FM** is, what RAG is, knowledge gap, vs fine-tuning  
+- Script: [`keyword_rag_gradio_chat.py`](12_RAG_Retrieval_Augmented_Generation/keyword_rag_gradio_chat.py) · Notes: [`keyword_rag_gradio_chat.md`](12_RAG_Retrieval_Augmented_Generation/keyword_rag_gradio_chat.md) — dictionary keyword RAG + Gradio chat  
+- [`2_rag_architecture_and_workflow.md`](12_RAG_Retrieval_Augmented_Generation/2_rag_architecture_and_workflow.md) — ingest, retrieve, augment, generate; 6-step query flow  
+- [`3_lm_types_and_embeddings.md`](12_RAG_Retrieval_Augmented_Generation/3_lm_types_and_embeddings.md) — autoregressive vs autoencoding; BERT / OpenAI embeddings  
+- [`4_building_rag_challenges.md`](12_RAG_Retrieval_Augmented_Generation/4_building_rag_challenges.md) — freshness, scale, relevance, bias, metrics; Bedrock KB note  
+- [`5_ragas_evaluation.md`](12_RAG_Retrieval_Augmented_Generation/5_ragas_evaluation.md) — faithfulness, answer relevancy, context recall/precision  
+- [`6_vector_store.md`](12_RAG_Retrieval_Augmented_Generation/6_vector_store.md) — embeddings storage, similarity search, popular vector DBs, full RAG diagram  
+
+### Topic 13 highlight
+
+- Read in order **`1_` → `9_`** in [`13_LANGCHAIN/`](13_LANGCHAIN/) — note number matches filename (`5_` = note 5 of 9)
+- [`1_introduction_to_langchain.md`](13_LANGCHAIN/1_introduction_to_langchain.md) — what LangChain is, components, chains, LCEL (light touch)
+- [`4_langchain_vs_langgraph.md`](13_LANGCHAIN/4_langchain_vs_langgraph.md) — toolbox vs graph orchestration
+- [`6_indexes_loaders_retrievers_vector_stores.md`](13_LANGCHAIN/6_indexes_loaders_retrievers_vector_stores.md) — loaders, retrievers, vector stores (RAG path)
+- [`9_agents.md`](13_LANGCHAIN/9_agents.md) — agents as reasoning + tools  
+- Practice: [`rag_langchain_chunks_vector_db_visualization.ipynb`](13_LANGCHAIN/rag_langchain_chunks_vector_db_visualization.ipynb) — chunk → embed → Chroma → t-SNE (`13_LANGCHAIN/knowledge-base/`)
+
 ### Extra notes
 
 - [`OpenAI_API_vs_ChatGPT_subscription.md`](OpenAI_API_vs_ChatGPT_subscription.md) — API billing vs ChatGPT plans  
 - [`Ollama_install_linux.md`](Ollama_install_linux.md) — install and run Ollama on Linux  
-=======
-# AI_LEARNING
-
-Personal notes and small experiments for OpenAI Cloud vs local Ollama.
-
-## Start here
-
-1. [OpenAI API vs ChatGPT subscription](OpenAI_API_vs_ChatGPT_subscription.md) — package, cloud API, billing vs ChatGPT plans  
-2. [Ollama install on Linux](Ollama_install_linux.md) — what Ollama is, why use it, then install / serve / pull / run
-
-## Hands-on scripts
-
-Folder: [`1_PRACTICE_ON_OLLAMA_and_OPENAI/`](1_PRACTICE_ON_OLLAMA_and_OPENAI/)
-
-| Script | Notes |
-|--------|--------|
-| [`Test_OPENAI_LLM_with_openAI.py`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.py) · [md](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_OPENAI_LLM_with_openAI.md) | Call OpenAI cloud (`gpt-4.1-nano`) |
-| [`Test_ollama_with_OPENAI.py`](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.py) · [md](1_PRACTICE_ON_OLLAMA_and_OPENAI/Test_ollama_with_OPENAI.md) | Call local Ollama via OpenAI-compatible API |
+- [`3_LLMs/LLM_comparison_overview.md`](3_LLMs/LLM_comparison_overview.md) — closed vs open model families (from remote)  
 
 ## Run (this laptop)
 

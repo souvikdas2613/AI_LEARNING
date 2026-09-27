@@ -2,7 +2,10 @@
 
 Personal learning notes: what an LLM is, how you use one, then a map of **closed** vs **open-source** model families.
 
-Also in this folder: [`what_are_tokens.md`](./what_are_tokens.md) — character → word → token (how LLMs read text).
+Also in this folder:
+
+- [`what_are_tokens.md`](./what_are_tokens.md) — character → word → token (how LLMs read text)
+- [`Features_of_LLM.md`](./Features_of_LLM.md) — characteristics of a powerful LLM (data, parameters, tokens, window, Transformer)
 
 > Snapshot era: ~2024–2025. Names and context windows change often; always check the vendor docs for current models (e.g. `gpt-4.1-nano`, Claude 4, Gemini 2.x, Llama 4).
 

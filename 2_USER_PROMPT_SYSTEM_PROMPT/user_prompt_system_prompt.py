@@ -46,15 +46,15 @@ def fetch_website_contents(url):
         text = ""
     return (title + "\n\n" + text)[:2_000]
 
-print ("\n\n\nFirst part of the program starts here | NO LLM CALL \n==================================================\n\n")
+print ("\nFirst part of the program starts here | NO LLM CALL \n==================================================\n")
 
 hp = fetch_website_contents("https://www.harrypotter.com/")
-print ("Harry Potter Website Contents:\n\n\n")
+print ("Harry Potter Website Contents:\n")
 print(hp)
 
-print ("\n\n\nFirst part of the program ends here | NO LLM CALL \n==================================================\n\n")
+print ("\nFirst part of the program ends here | NO LLM CALL \n==================================================\n")
 
-print ("\n\n\nSecond part of the program starts here | LLM CALL \n==================================================\n\n")
+print ("\nSecond part of the program starts here | LLM CALL \n==================================================\n")
 
 # Define our system prompt - you can experiment with this later, changing the last sentence to 'Respond in markdown in Spanish."
 
@@ -93,12 +93,12 @@ def summarize(url):
         messages = messages_for(website)
     )
 
-    print("\n\nMessages for the website:\n\n", messages_for(website))
-    print ("\n\nSummarizing the website...\n\n")
+    print("\nMessages for the website:\n", messages_for(website))
+    print ("\nSummarizing the website...\n")
 
     return response.choices[0].message.content
 
 
 print(summarize("https://www.harrypotter.com/"))
 
-print ("\n\n\nSecond part of the program ends here | LLM CALL \n==================================================\n\n")
+print ("\nSecond part of the program ends here | LLM CALL \n==================================================\n")

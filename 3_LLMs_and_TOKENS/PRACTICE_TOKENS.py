@@ -18,14 +18,14 @@ else:
     print("API key found and looks good so far!")
 
 if not MODEL_NAME:
-    print("\n\nNo model name was found - please head over to the .env file to identify & fix!")
+    print("\nNo model name was found - please head over to the .env file to identify & fix!")
 else:
-    print("\n\nModel name found " + MODEL_NAME + " and looks good so far!\n\n")
+    print("\nModel name found " + MODEL_NAME + " and looks good so far!")
 
 
 encoding = tiktoken.encoding_for_model(MODEL_NAME)
 
-print ("\n\n\n===========EXAMPLE - 1 ===================================\n\n\n")
+print ("\n===========EXAMPLE - 1 ===================================\n")
 
 tokens = encoding.encode("Hi my name is Souvik")
 
@@ -37,7 +37,7 @@ for token_id in tokens:
     print(f"{token_id} = {token_text}")
 
 
-print ("\n\n\n===========EXAMPLE - 2 ===================================\n\n\n")
+print ("\n===========EXAMPLE - 2 ===================================\n")
 
 tokens = encoding.encode("Hi my name is Souvik and I have an umbrella")
 
