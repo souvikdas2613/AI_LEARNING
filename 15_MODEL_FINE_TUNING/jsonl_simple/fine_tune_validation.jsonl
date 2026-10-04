@@ -1,0 +1,2 @@
+{"messages": [{"role": "user", "content": "Estimate the price of this product. Respond with the price, no explanation\n\nPortable waterproof speaker, 12h battery"}, {"role": "assistant", "content": "$34.99"}]}
+{"messages": [{"role": "user", "content": "Estimate the price of this product. Respond with the price, no explanation\n\nAdjustable aluminum stand for phones and tablets"}, {"role": "assistant", "content": "$15.00"}]}

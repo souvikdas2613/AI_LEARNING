@@ -4,7 +4,7 @@
 
 Related: [`what_is_an_llm.md`](../3_LLMs_and_TOKENS/what_is_an_llm.md) · [`README_LLM_STATELESS_NO_MEMORY.md`](../3_LLMs_and_TOKENS/README_LLM_STATELESS_NO_MEMORY.md) · [`agents_and_tools.md`](../6_AGENTS_AND_TOOLS/agents_and_tools.md)
 
-**Read in order:** `1_` → `6_` (this file is **1**). Note **6** fits best right after **3** (embeddings).
+**Read in order:** `1_` → `8_` (this file is **1**). Note **6** fits best right after **3** (embeddings). Notes **7–8** continue retrieval metrics after **5**.
 
 | # | Note | Topics |
 |---|------|--------|
@@ -14,6 +14,8 @@ Related: [`what_is_an_llm.md`](../3_LLMs_and_TOKENS/what_is_an_llm.md) · [`READ
 | 4 | [`4_building_rag_challenges.md`](./4_building_rag_challenges.md) | Operational challenges (freshness, scale, relevance, bias, metrics) |
 | 5 | [`5_ragas_evaluation.md`](./5_ragas_evaluation.md) | RAGAS metrics: faithfulness, relevancy, context recall/precision |
 | 6 | [`6_vector_store.md`](./6_vector_store.md) | What a vector store is, similarity search, popular tools, full RAG diagram |
+| 7 | [`7_mrr_mean_reciprocal_rank.md`](./7_mrr_mean_reciprocal_rank.md) | MRR — how high the first relevant result ranks |
+| 8 | [`8_recall_precision_at_k.md`](./8_recall_precision_at_k.md) | Recall@K & Precision@K — coverage vs relevance in top K |
 
 ---
 

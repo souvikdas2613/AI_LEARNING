@@ -1,0 +1,5 @@
+{"messages": [{"role": "user", "content": "Estimate the price of this product. Respond with the price, no explanation\n\n1.7L electric kettle, boil-dry protection, black"}, {"role": "assistant", "content": "$29.99"}]}
+{"messages": [{"role": "user", "content": "Estimate the price of this product. Respond with the price, no explanation\n\nErgonomic USB-C rechargeable mouse, silent clicks"}, {"role": "assistant", "content": "$18.50"}]}
+{"messages": [{"role": "user", "content": "Estimate the price of this product. Respond with the price, no explanation\n\n6mm non-slip TPE yoga mat with carrying strap"}, {"role": "assistant", "content": "$24.00"}]}
+{"messages": [{"role": "user", "content": "Estimate the price of this product. Respond with the price, no explanation\n\n7-in-1 hub: HDMI, SD, USB 3.0, 100W PD"}, {"role": "assistant", "content": "$39.99"}]}
+{"messages": [{"role": "user", "content": "Estimate the price of this product. Respond with the price, no explanation\n\nLED desk lamp, 5 brightness levels, USB port"}, {"role": "assistant", "content": "$22.00"}]}

@@ -2,7 +2,7 @@
 
 Chapter notes (folder `12_RAG_Retrieval_Augmented_Generation`).
 
-**Read order:** `6` of `6` — best after [`3_lm_types_and_embeddings.md`](./3_lm_types_and_embeddings.md) (what embeddings are); ties to [`2_rag_architecture_and_workflow.md`](./2_rag_architecture_and_workflow.md) retrieve phase.
+**Read order:** `6` of `8` — best after [`3_lm_types_and_embeddings.md`](./3_lm_types_and_embeddings.md) (what embeddings are); ties to [`2_rag_architecture_and_workflow.md`](./2_rag_architecture_and_workflow.md) retrieve phase. Evaluation continues in notes **5**, then **7–8**.
 
 Related: [`6_indexes_loaders_retrievers_vector_stores.md`](../13_LANGCHAIN/6_indexes_loaders_retrievers_vector_stores.md) · [`4_langchain_vs_langgraph.md`](../13_LANGCHAIN/4_langchain_vs_langgraph.md)
 

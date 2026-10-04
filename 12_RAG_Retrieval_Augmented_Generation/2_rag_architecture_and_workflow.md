@@ -2,7 +2,7 @@
 
 Chapter notes (folder `12_RAG_Retrieval_Augmented_Generation`).
 
-**Read order:** `2` of `6` — start with [`1_introduction_to_rag.md`](./1_introduction_to_rag.md).
+**Read order:** `2` of `8` — start with [`1_introduction_to_rag.md`](./1_introduction_to_rag.md).
 
 Embeddings background (note **3**): [`3_lm_types_and_embeddings.md`](./3_lm_types_and_embeddings.md)
 

@@ -7,7 +7,7 @@ Chapter notes (folder `12_RAG_Retrieval_Augmented_Generation`).
 - Site: [ragas.io](https://www.ragas.io/)  
 - Use when: you need **metrics** for retrieval vs generation vs end-to-end quality  
 
-**Read order:** `5` of `6` — after [`4_building_rag_challenges.md`](./4_building_rag_challenges.md) (evolution and metrics). Also read [`6_vector_store.md`](./6_vector_store.md) (after note **3** if you follow the embedding → storage path).
+**Read order:** `5` of `8` — after [`4_building_rag_challenges.md`](./4_building_rag_challenges.md) (evolution and metrics). Also read [`6_vector_store.md`](./6_vector_store.md) (after note **3** if you follow the embedding → storage path). **Next (classic IR metrics):** [`7_mrr_mean_reciprocal_rank.md`](./7_mrr_mean_reciprocal_rank.md) · [`8_recall_precision_at_k.md`](./8_recall_precision_at_k.md).
 
 ---
 
@@ -92,3 +92,5 @@ RAGAS gives **separate signals** so you know which part to fix.
 3. Run **RAGAS** (or similar) when you change chunk size, embed model, or top-k.  
 
 See [`1_introduction_to_rag.md`](./1_introduction_to_rag.md) for concepts; [`2_rag_architecture_and_workflow.md`](./2_rag_architecture_and_workflow.md) for where each metric applies in the pipeline.
+
+**Related IR metrics:** [`7_mrr_mean_reciprocal_rank.md`](./7_mrr_mean_reciprocal_rank.md) · [`8_recall_precision_at_k.md`](./8_recall_precision_at_k.md).

@@ -2,9 +2,9 @@
 
 Chapter notes (folder `12_RAG_Retrieval_Augmented_Generation`).
 
-**Read order:** `4` of `6` — after notes **1–3**.
+**Read order:** `4` of `8` — after notes **1–3**.
 
-Related: [`1_introduction_to_rag.md`](./1_introduction_to_rag.md) · [`5_ragas_evaluation.md`](./5_ragas_evaluation.md)
+Related: [`1_introduction_to_rag.md`](./1_introduction_to_rag.md) · [`5_ragas_evaluation.md`](./5_ragas_evaluation.md) · [`7_mrr_mean_reciprocal_rank.md`](./7_mrr_mean_reciprocal_rank.md) · [`8_recall_precision_at_k.md`](./8_recall_precision_at_k.md)
 
 ---
 

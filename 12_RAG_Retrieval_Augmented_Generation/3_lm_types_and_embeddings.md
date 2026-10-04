@@ -2,7 +2,7 @@
 
 Chapter notes (folder `12_RAG_Retrieval_Augmented_Generation`).
 
-**Read order:** `3` of `6` — after [`2_rag_architecture_and_workflow.md`](./2_rag_architecture_and_workflow.md) §8 (autoencoder vs autoregressive vs encoder–decoder) for the full architecture picture; this note focuses on RAG roles and embeddings. **Next deep dive:** [`6_vector_store.md`](./6_vector_store.md).
+**Read order:** `3` of `8` — after [`2_rag_architecture_and_workflow.md`](./2_rag_architecture_and_workflow.md) §8 (autoencoder vs autoregressive vs encoder–decoder) for the full architecture picture; this note focuses on RAG roles and embeddings. **Next deep dive:** [`6_vector_store.md`](./6_vector_store.md).
 
 Related: [`1_introduction_to_rag.md`](./1_introduction_to_rag.md) · [`what_is_huggingface.md`](../7_HUGGING_FACE/what_is_huggingface.md) (pipelines / encoder models)
 
