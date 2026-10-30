@@ -2,7 +2,15 @@
 
 This note explains the **OpenAI Python package** and what each line of the script does.
 
-Both this script and [`Test_ollama_with_OPENAI.py`](Test_ollama_with_OPENAI.py) share the **same structure**. The main difference is how the `OpenAI()` client is created (cloud OpenAI vs local Ollama).
+This script, [`Test_ollama_with_OPENAI.py`](Test_ollama_with_OPENAI.py), and [`test_granite_redhat_model.py`](test_granite_redhat_model.py) share the **same structure**. The main difference is how the `OpenAI()` client is created (cloud OpenAI vs local Ollama vs Red Hat Granite).
+
+Same `chat.completions.create(...)` call in all three — only the host (and auth) change:
+
+| Script | `base_url` | Why |
+|--------|------------|-----|
+| **This file (OpenAI cloud)** | not needed | default = OpenAI cloud (`https://api.openai.com/v1`) |
+| [Ollama](Test_ollama_with_OPENAI.py) | `http://localhost:11434/v1` | local server, not OpenAI |
+| [Granite / RHDP](test_granite_redhat_model.py) | RHDP MaaS URL from `.env` | Red Hat host, not OpenAI |
 
 Concept overviews (repo root): [OpenAI API vs ChatGPT](../OpenAI_API_vs_ChatGPT_subscription.md) · [Ollama install](../Ollama_install_linux.md)
 
@@ -51,7 +59,12 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 import os
 
-messages = [{"role": "user", "content": "Who is IRON MAN ?"}]
+messages = [
+    {
+        "role": "user",
+        "content": "Who is IRON MAN ?"
+    }
+]
 
 MODEL_NAME = "gpt-4.1-nano"
 
@@ -108,7 +121,12 @@ Imports Python’s standard `os` module so you can read environment variables wi
 ### Build the chat prompt and model name
 
 ```python
-messages = [{"role": "user", "content": "Who is IRON MAN ?"}]
+messages = [
+    {
+        "role": "user",
+        "content": "Who is IRON MAN ?"
+    }
+]
 ```
 
 Creates the chat input as a **list of message dictionaries**.
@@ -149,18 +167,26 @@ The script still continues either way. The real API call will fail later if the 
 
 ---
 
-### Create the OpenAI client (cloud)
+### Create the OpenAI client (cloud) — why no `base_url`?
 
 ```python
 openai = OpenAI()
 ```
 
-Creates a client instance for **OpenAI’s cloud API**.
+Creates a client instance for **OpenAI’s own cloud API**, which is what the `openai` package is built for by default.
 
-By default it looks for `OPENAI_API_KEY` in the environment.  
-You do not need to pass the key manually if `.env` was loaded correctly.
+With **no** `base_url`, the client uses OpenAI’s official host:
 
-This is the main difference vs the Ollama script, which instead does:
+```text
+https://api.openai.com/v1
+```
+
+It also picks up `OPENAI_API_KEY` from the environment automatically.  
+You do not need to pass the key (or URL) manually if `.env` was loaded correctly.
+
+You only pass `base_url` when the API lives **somewhere else** but still speaks the OpenAI-shaped Chat Completions format (see the table at the top of this note).
+
+Ollama example for contrast:
 
 ```python
 openai = OpenAI(base_url='http://localhost:11434/v1', api_key='ollama')

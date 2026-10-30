@@ -3,7 +3,12 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 import os
 
-messages = [{"role": "user", "content": "Who is IRON MAN ?"}]
+messages = [
+    {
+        "role": "user",
+        "content": "Who is IRON MAN ?"
+    }
+]
 
 MODEL_NAME = "qwen2.5:1.5b"
 

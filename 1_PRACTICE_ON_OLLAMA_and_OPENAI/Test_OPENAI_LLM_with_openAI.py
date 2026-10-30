@@ -3,9 +3,14 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 import os
 
-messages = [{"role": "user", "content": "Who is IRON MAN ?"}]
+messages = [
+    {
+        "role": "user",
+        "content": "Who is IRON MAN ?"
+    }
+]
 
-MODEL_NAME = "gpt-4.1-nano"
+MODEL_NAME = "gpt-4.1-mini"
 
 openai_api_key = os.getenv('OPENAI_API_KEY')
 

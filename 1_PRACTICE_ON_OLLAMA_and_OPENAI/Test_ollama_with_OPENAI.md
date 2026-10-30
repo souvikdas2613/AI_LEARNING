@@ -2,7 +2,15 @@
 
 This note explains **Ollama**, why this script uses the **OpenAI Python package**, and what each line does.
 
-Both this script and [`Test_OPENAI_LLM_with_openAI.py`](Test_OPENAI_LLM_with_openAI.py) share the **same structure**. The main difference is how the `OpenAI()` client is created (local Ollama vs cloud OpenAI).
+This script, [`Test_OPENAI_LLM_with_openAI.py`](Test_OPENAI_LLM_with_openAI.py), and [`test_granite_redhat_model.py`](test_granite_redhat_model.py) share the **same structure**. The main difference is how the `OpenAI()` client is created (local Ollama vs cloud OpenAI vs Red Hat Granite).
+
+Same `chat.completions.create(...)` call in all three — only the host (and auth) change:
+
+| Script | `base_url` | Why |
+|--------|------------|-----|
+| [OpenAI cloud](Test_OPENAI_LLM_with_openAI.py) | not needed | default = OpenAI cloud (`https://api.openai.com/v1`) |
+| **This file (Ollama)** | `http://localhost:11434/v1` | local server, not OpenAI |
+| [Granite / RHDP](test_granite_redhat_model.py) | RHDP MaaS URL from `.env` | Red Hat host, not OpenAI |
 
 Concept overviews (repo root): [OpenAI API vs ChatGPT](../OpenAI_API_vs_ChatGPT_subscription.md) · [Ollama install](../Ollama_install_linux.md)
 
@@ -37,14 +45,15 @@ That means the same `openai` Python client can talk to Ollama if you:
 1. Point `base_url` at Ollama instead of OpenAI’s cloud
 2. Pass any dummy `api_key` (Ollama expects a key field but does not validate a real OpenAI key)
 
-So this script is **not** calling OpenAI’s paid API. It reuses the OpenAI **client library** as a convenient way to send chat requests to a local model.
+So this script is **not** calling OpenAI’s paid API. It reuses the OpenAI **client library** as a convenient way to send chat requests to a local model. See the `base_url` table at the top of this note.
+
+Extra contrast vs OpenAI cloud only:
 
 | | OpenAI cloud script | This Ollama script |
 |--|---------------------|--------------------|
 | Where the model runs | OpenAI servers | Your PC via Ollama |
 | Cost | API usage fees | Free (local compute) |
 | Auth | Real `OPENAI_API_KEY` from `.env` | Dummy key `'ollama'` |
-| Client create | `OpenAI()` | `OpenAI(base_url=..., api_key='ollama')` |
 | Model example | `gpt-4.1-nano` | `qwen2.5:1.5b` |
 
 ---
@@ -57,7 +66,12 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 import os
 
-messages = [{"role": "user", "content": "Who is IRON MAN ?"}]
+messages = [
+    {
+        "role": "user",
+        "content": "Who is IRON MAN ?"
+    }
+]
 
 MODEL_NAME = "qwen2.5:1.5b"
 
@@ -98,7 +112,12 @@ This Ollama script does **not** read `OPENAI_API_KEY` — the local client uses 
 ### Build the chat prompt and model name
 
 ```python
-messages = [{"role": "user", "content": "Who is IRON MAN ?"}]
+messages = [
+    {
+        "role": "user",
+        "content": "Who is IRON MAN ?"
+    }
+]
 ```
 
 Creates the chat input as a list of message dictionaries — same format as the OpenAI cloud API.
