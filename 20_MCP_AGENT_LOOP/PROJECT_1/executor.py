@@ -1,0 +1,11 @@
+from mcp_client import execute_tool
+
+async def execute_action(action, client):
+    result = await execute_tool(client, action)
+    if hasattr(result, "content"):
+        if result.content:
+            return result.content[0].text
+
+    print("Result:\n----------------")
+    print(result)
+    return str(result)

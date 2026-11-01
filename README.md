@@ -29,6 +29,8 @@ If you are new to AI and feel lost in big words, this journey is for you.
 - use **Modal** — run Python and GPU workloads in the cloud from your code
 - build a **mini AI agent** — planner LLM picks a tool, Python runs it, answer LLM replies
 - learn **MCP** — Model Context Protocol (“USB-C” for connecting AI apps to tools and data)
+- run an **MCP agent loop** — state + planner + tools until `FINISH` (multi-step, not one-shot)
+- learn **memory engineering** — what AI should remember across sessions (not just this prompt)
 
 These notes are written in plain language, with step-by-step explanations, so beginners can follow along without fear.  
 If **Souvik** can learn it this way, you can too.
@@ -59,6 +61,8 @@ If **Souvik** can learn it this way, you can too.
 | 17 | [`17_MODAL`](17_MODAL/) | Modal — start [`1_what_is_modal.md`](17_MODAL/1_what_is_modal.md) |
 | 18 | [`18_AI_AGENTS_INTRO`](18_AI_AGENTS_INTRO/) | Mini AI agent — read `1_` → `2_` (start [`README.md`](18_AI_AGENTS_INTRO/README.md)) |
 | 19 | [`19_MCP_MODEL_CONTEXT_PROTOCOL`](19_MCP_MODEL_CONTEXT_PROTOCOL/) | MCP — read `1_` … `5_` (start [`README.md`](19_MCP_MODEL_CONTEXT_PROTOCOL/README.md)) |
+| 20 | [`20_MCP_AGENT_LOOP`](20_MCP_AGENT_LOOP/) | Looping MCP agent — state + planner + `FINISH` (start [`README.md`](20_MCP_AGENT_LOOP/README.md)) |
+| 21 | [`21_MEMORY_ENGINEERING`](21_MEMORY_ENGINEERING/) | Memory — intro · [`PROJECT_1`](21_MEMORY_ENGINEERING/PROJECT_1/1_semantic_memory_lab.md) · [`PROJECT_2`](21_MEMORY_ENGINEERING/PROJECT_2/2_mcp_agent_semantic_memory.md) · [`PROJECT_3`](21_MEMORY_ENGINEERING/PROJECT_3/3_memory_extraction_agent.md) |
 
 ### Topic 1 highlight
 
@@ -178,6 +182,23 @@ If **Souvik** can learn it this way, you can too.
 - Lab **PROJECT_1**: [`weather.py`](19_MCP_MODEL_CONTEXT_PROTOCOL/PROJECT_1/weather.py) · [`7_weather_py.md`](19_MCP_MODEL_CONTEXT_PROTOCOL/PROJECT_1/7_weather_py.md) — NWS MCP server, Cursor `mcp.json`, line-by-line  
 - Lab **PROJECT_2**: [`8_mcp_client_lab.md`](19_MCP_MODEL_CONTEXT_PROTOCOL/PROJECT_2/8_mcp_client_lab.md) — `server.py` + `mcp_client.py` + `test_client.py` (`python test_client.py`)  
 - Builds on: [`18_AI_AGENTS_INTRO/`](18_AI_AGENTS_INTRO/) · [`5_TOOLS_FUNCTIONS/`](5_TOOLS_FUNCTIONS/)  
+
+### Topic 20 highlight
+
+- Chapter intro: [`20_MCP_AGENT_LOOP/README.md`](20_MCP_AGENT_LOOP/README.md) — state + while-loop vs PROJECT_3 one-shot  
+- Lab **PROJECT_1**: [`1_mcp_agent_loop.md`](20_MCP_AGENT_LOOP/PROJECT_1/1_mcp_agent_loop.md) — who calls whom, loop, planner `FINISH`, sample two-tool run  
+- Entry: [`runner.py`](20_MCP_AGENT_LOOP/PROJECT_1/runner.py) (`python runner.py`) · state smoke: [`test_state.py`](20_MCP_AGENT_LOOP/PROJECT_1/test_state.py)  
+- Lab **PROJECT_2**: [`2_mcp_task_agent_loop.md`](20_MCP_AGENT_LOOP/PROJECT_2/2_mcp_task_agent_loop.md) — task decomposition + `TASK`/`TOOL` loop  
+- Entry: [`runner.py`](20_MCP_AGENT_LOOP/PROJECT_2/runner.py) (`python runner.py`)  
+- Builds on: [`19_MCP_MODEL_CONTEXT_PROTOCOL/PROJECT_3/`](19_MCP_MODEL_CONTEXT_PROTOCOL/PROJECT_3/)  
+
+### Topic 21 highlight
+
+- Chapter intro: [`1_introduction_to_memory_engineering.md`](21_MEMORY_ENGINEERING/1_introduction_to_memory_engineering.md) — four memory types, RAG vs memory, context vs memory  
+- Lab **PROJECT_1**: [`1_semantic_memory_lab.md`](21_MEMORY_ENGINEERING/PROJECT_1/1_semantic_memory_lab.md) — `python test_memory.py` · SQLite + `min_score` / `max_results`  
+- Lab **PROJECT_2**: [`2_mcp_agent_semantic_memory.md`](21_MEMORY_ENGINEERING/PROJECT_2/2_mcp_agent_semantic_memory.md) — `python runner.py` · Ch20 task agent + retrieve/save · smoke: [`test_memory.py`](21_MEMORY_ENGINEERING/PROJECT_2/test_memory.py)  
+- Lab **PROJECT_3**: [`3_memory_extraction_agent.md`](21_MEMORY_ENGINEERING/PROJECT_3/3_memory_extraction_agent.md) — PROJECT_2 + [`memory_extractor.py`](21_MEMORY_ENGINEERING/PROJECT_3/memory_extractor.py) · smoke: [`test_memory_extractor.py`](21_MEMORY_ENGINEERING/PROJECT_3/test_memory_extractor.py)  
+- Builds on: [`12_RAG_Retrieval_Augmented_Generation/cosine_similarity.md`](12_RAG_Retrieval_Augmented_Generation/cosine_similarity.md) · [`20_MCP_AGENT_LOOP/PROJECT_2/`](20_MCP_AGENT_LOOP/PROJECT_2/)  
 
 ### Extra notes
 

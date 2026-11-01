@@ -23,6 +23,8 @@ Read in order **`1_` → `5_`**:
 | [`PROJECT_2/`](./PROJECT_2/) | [`server.py`](./PROJECT_2/server.py) · [`mcp_client.py`](./PROJECT_2/mcp_client.py) · [`test_client.py`](./PROJECT_2/test_client.py) · [`8_mcp_client_lab.md`](./PROJECT_2/8_mcp_client_lab.md) | MCP **client** in Python (`fastmcp.Client`) |
 | [`PROJECT_3/`](./PROJECT_3/) | [`server.py`](./PROJECT_3/server.py) · [`mcp_client.py`](./PROJECT_3/mcp_client.py) · [`planner.py`](./PROJECT_3/planner.py) · [`agent.py`](./PROJECT_3/agent.py) · [`9_mcp_agent_lab.md`](./PROJECT_3/9_mcp_agent_lab.md) | **Agent**: LLM planner + MCP tools (Topic 18 pattern on MCP server) |
 
+**Next chapter:** looping agent with **state** — [`20_MCP_AGENT_LOOP/`](../20_MCP_AGENT_LOOP/) ([`PROJECT_1/1_mcp_agent_loop.md`](../20_MCP_AGENT_LOOP/PROJECT_1/1_mcp_agent_loop.md)). PROJECT_3 is **one** tool then answer; Topic 20 repeats plan → act until `FINISH`.
+
 **Before this chapter**
 
 - Tools in your own Python: [`5_TOOLS_FUNCTIONS/`](../5_TOOLS_FUNCTIONS/)  
