@@ -1,0 +1,20 @@
+Python is a high-level language known for readable syntax and a large standard library.
+
+Common types: int, float, str, list, dict, set, tuple.
+Lists are ordered and mutable: items = [1, 2, 3].
+Dicts map keys to values: user = {"name": "Souvik", "role": "engineer"}.
+
+Functions use def. To define a function in Python:
+  def greet(name):
+      return f"Hello, {name}"
+
+Classes group data and behavior:
+  class Point:
+      def __init__(self, x, y):
+          self.x = x
+          self.y = y
+
+Popular areas: scripting, data science, web (FastAPI, Django), automation, and AI (API clients, LangChain).
+
+Run a file with: python script.py
+Use a virtual environment or conda env to manage dependencies with pip.

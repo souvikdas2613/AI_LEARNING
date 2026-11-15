@@ -31,6 +31,7 @@ If you are new to AI and feel lost in big words, this journey is for you.
 - learn **MCP** — Model Context Protocol (“USB-C” for connecting AI apps to tools and data)
 - run an **MCP agent loop** — state + planner + tools until `FINISH` (multi-step, not one-shot)
 - learn **memory engineering** — what AI should remember across sessions (not just this prompt)
+- go beyond basic RAG — **FAISS**, hybrid search, and **re-ranking** for stronger retrieval
 
 These notes are written in plain language, with step-by-step explanations, so beginners can follow along without fear.  
 If **Souvik** can learn it this way, you can too.
@@ -63,6 +64,7 @@ If **Souvik** can learn it this way, you can too.
 | 19 | [`19_MCP_MODEL_CONTEXT_PROTOCOL`](19_MCP_MODEL_CONTEXT_PROTOCOL/) | MCP — read `1_` … `5_` (start [`README.md`](19_MCP_MODEL_CONTEXT_PROTOCOL/README.md)) |
 | 20 | [`20_MCP_AGENT_LOOP`](20_MCP_AGENT_LOOP/) | Looping MCP agent — state + planner + `FINISH` (start [`README.md`](20_MCP_AGENT_LOOP/README.md)) |
 | 21 | [`21_MEMORY_ENGINEERING`](21_MEMORY_ENGINEERING/) | Memory — intro · [`PROJECT_1`](21_MEMORY_ENGINEERING/PROJECT_1/1_semantic_memory_lab.md) · [`PROJECT_2`](21_MEMORY_ENGINEERING/PROJECT_2/2_mcp_agent_semantic_memory.md) · [`PROJECT_3`](21_MEMORY_ENGINEERING/PROJECT_3/3_memory_extraction_agent.md) |
+| 22 | [`22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/) | Advanced RAG — FAISS, hybrid search, re-rank (start [`README.md`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/README.md)) |
 
 ### Topic 1 highlight
 
@@ -199,6 +201,13 @@ If **Souvik** can learn it this way, you can too.
 - Lab **PROJECT_2**: [`2_mcp_agent_semantic_memory.md`](21_MEMORY_ENGINEERING/PROJECT_2/2_mcp_agent_semantic_memory.md) — `python runner.py` · Ch20 task agent + retrieve/save · smoke: [`test_memory.py`](21_MEMORY_ENGINEERING/PROJECT_2/test_memory.py)  
 - Lab **PROJECT_3**: [`3_memory_extraction_agent.md`](21_MEMORY_ENGINEERING/PROJECT_3/3_memory_extraction_agent.md) — PROJECT_2 + [`memory_extractor.py`](21_MEMORY_ENGINEERING/PROJECT_3/memory_extractor.py) · smoke: [`test_memory_extractor.py`](21_MEMORY_ENGINEERING/PROJECT_3/test_memory_extractor.py)  
 - Builds on: [`12_RAG_Retrieval_Augmented_Generation/cosine_similarity.md`](12_RAG_Retrieval_Augmented_Generation/cosine_similarity.md) · [`20_MCP_AGENT_LOOP/PROJECT_2/`](20_MCP_AGENT_LOOP/PROJECT_2/)  
+
+### Topic 22 highlight
+
+- Chapter intro: [`22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/README.md`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/README.md) — FAISS · semantic lab · keyword lab · full `project/`  
+- Labs: [`PROJECT_SEMANTIC_SEARCH/semantic_search.py`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/PROJECT_SEMANTIC_SEARCH/semantic_search.py) · [`PROJECT_KEYWORD_SEARCH/keyword_search.py`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/PROJECT_KEYWORD_SEARCH/keyword_search.py) — one `.py` + `.md` each  
+- Full RAG: [`project/main.py`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/project/main.py) — hybrid + Chroma + rerank  
+- Builds on: [`12_RAG_Retrieval_Augmented_Generation/`](12_RAG_Retrieval_Augmented_Generation/) · [`13_LANGCHAIN/10_embeddings_and_vector_store.md`](13_LANGCHAIN/10_embeddings_and_vector_store.md) · [`21_MEMORY_ENGINEERING/1_introduction_to_memory_engineering.md`](21_MEMORY_ENGINEERING/1_introduction_to_memory_engineering.md)
 
 ### Extra notes
 
