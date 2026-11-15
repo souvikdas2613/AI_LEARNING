@@ -1,0 +1,16 @@
+C++ is a compiled systems language used for performance-critical software.
+
+Source files are often .cpp with headers .h or .hpp.
+A program starts at int main() and is built with a compiler such as g++:
+  g++ -std=c++17 -O2 -o app main.cpp
+
+Core ideas:
+  - Value types vs references
+  - Pointers and references (& and *)
+  - RAII: constructors acquire resources, destructors release them
+  - std::vector and std::string from the Standard Library
+
+Classes support encapsulation, inheritance, and polymorphism.
+Smart pointers (std::unique_ptr, std::shared_ptr) help manage memory safely.
+
+C++ is common in game engines, databases, networking stacks, and embedded systems where low overhead matters.

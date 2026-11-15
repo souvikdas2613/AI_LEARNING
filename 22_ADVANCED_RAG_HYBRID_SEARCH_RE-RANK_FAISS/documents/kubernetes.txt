@@ -1,0 +1,17 @@
+Kubernetes (K8s) runs containerized applications across a cluster of machines.
+
+A Pod is the smallest deployable unit: one or more containers that share network and storage.
+A Deployment manages replicated Pods and supports rolling updates and rollbacks.
+A Service gives Pods a stable IP and DNS name so other apps can reach them (ClusterIP, NodePort, LoadBalancer).
+
+kubectl is the CLI. You can list pods with kubectl.
+Examples:
+  kubectl get pods
+  kubectl get pods -A
+  kubectl apply -f deployment.yaml
+  kubectl describe pod my-pod
+
+A Namespace isolates resources (for example dev vs prod).
+The control plane schedules work: API server, scheduler, controller manager, etcd.
+
+OpenShift is a Kubernetes distribution that adds developer and operator tooling on top of the same core concepts.
