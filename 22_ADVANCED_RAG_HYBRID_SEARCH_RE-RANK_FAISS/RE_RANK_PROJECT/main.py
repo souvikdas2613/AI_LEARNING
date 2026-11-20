@@ -20,20 +20,20 @@ def main():
     paths = sorted(DOCUMENTS_DIR.glob("*.txt"))
     if not paths:
         raise SystemExit(f"No .txt files in {DOCUMENTS_DIR}")
-    print("Building re-rank RAG knowledge base (whole files, chunking off for now)...")
+    print("Building re-rank RAG (whole files → Chroma)...")
     for path in paths:
         text = path.read_text(encoding="utf-8")
         build_rag(text, path.name, chunk=False)
         print(f"  indexed {path.name}")
-    print("\nRe-rank RAG is ready.")
+    print("\nReady — hybrid shortlist, then LLM re-rank keeps top 3 for the prompt.")
     while True:
         query = input("\nYou : ").strip()
         if query.lower() in {"exit", "quit"}:
             break
         results = retrieve(query, top_k=5)
-        print("\nRetrieved Sources Ranking (after re-rank):")
+        print("\n3) Winners after re-rank (enter the prompt):")
         for result in results:
-            print(f"- {result['source']} (chunk {result['chunk_id']})")
+            print(f"- {result['source']}  rerank={result['rerank_score']:.1f}")
         answer = generate_answer(query, results)
         print("\nRAG :")
         print(answer)

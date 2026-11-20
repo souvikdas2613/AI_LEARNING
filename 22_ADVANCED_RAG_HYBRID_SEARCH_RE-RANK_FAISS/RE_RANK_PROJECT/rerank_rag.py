@@ -1,6 +1,6 @@
 from chunker import create_chunks
 from embeddings import embed_chunks, create_embedding
-from chroma_store import add_chunks, search as chroma_search
+from chroma_store import add_chunks, search
 from retriever import keyword_score
 from reranker import rerank
 
@@ -18,7 +18,7 @@ def build_rag(text, source, chunk=False):
 def retrieve(query, top_k=5):
     """Hybrid shortlist, then LLM re-rank → top 3 for the prompt."""
     query_embedding = create_embedding(query)
-    semantic_results = chroma_search(query_embedding, top_k=top_k)
+    semantic_results = search(query_embedding, top_k=top_k)
     candidates = []
     documents = semantic_results["documents"][0]
     metadatas = semantic_results["metadatas"][0]
@@ -40,7 +40,13 @@ def retrieve(query, top_k=5):
         })
     candidates.sort(key=lambda item: item["combined_score"], reverse=True)
     candidates = candidates[:top_k]
-    print("\nRetrieved Sources Candidates (hybrid):")
+    print("\n1) Hybrid shortlist (before re-rank):")
     for candidate in candidates:
-        print(f"- {candidate['source']} (chunk {candidate['chunk_id']})")
+        print(
+            f"- {candidate['source']}  "
+            f"semantic={candidate['semantic_score']:.3f}  "
+            f"keyword={candidate['keyword_score']:.3f}  "
+            f"combined={candidate['combined_score']:.3f}"
+        )
+    print(f"\n2) LLM re-rank → keep top 3 (scores 0–100)...")
     return rerank(query, candidates, top_k=3)
