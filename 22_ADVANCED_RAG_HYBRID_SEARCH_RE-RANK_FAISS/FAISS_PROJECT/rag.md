@@ -351,7 +351,7 @@ That’s why the meetup story has **three parts**: FAISS → Hybrid → Re-rank.
 
 **Talk line:** FAISS makes retrieval scalable. It doesn’t automatically make the prompt thin — that’s why we still need smarter selection *after* FAISS.
 
-So this `rag.py` is the **fair compare** to naive. The energy win shows up later in this chapter (hybrid + re-rank + lean chunks) — see [`../project/`](../project/).
+So this `rag.py` is the **fair compare** to naive. The energy win shows up later in this chapter (hybrid + re-rank + lean chunks) — see [`../HYBRID_PROJECT/`](../HYBRID_PROJECT/) and [`../RE_RANK_PROJECT/`](../RE_RANK_PROJECT/).
 
 ---
 
@@ -362,7 +362,7 @@ So this `rag.py` is the **fair compare** to naive. The energy win shows up later
 - `IndexFlatL2` is exact and simple — great for learning; huge corpora often use approximate indexes.  
 - No persistence: index is rebuilt in memory every run.
 
-Energy-aware path later: hybrid + re-rank + lean top 2–3 chunks (see `project/`).
+Energy-aware path later: hybrid + re-rank + lean top 2–3 chunks (see `HYBRID_PROJECT/` then `RE_RANK_PROJECT/`).
 
 ---
 

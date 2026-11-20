@@ -4,7 +4,7 @@ Chapter notes for **Souvik’s** AI learning journey (folder `22_ADVANCED_RAG_HY
 
 **Topic 12** introduced RAG — embeddings, cosine similarity, vector stores, and evaluation metrics.  
 **Topic 13** built a LangChain **Chroma** index under `13_LANGCHAIN/vector_db/`.  
-**This chapter** adds **FAISS** concepts, **hybrid retrieval**, **re-ranking**, and a **`project/`** pipeline that uses **Chroma + OpenAI** end to end.
+**This chapter** adds **FAISS**, **hybrid retrieval**, and **re-ranking** as separate project folders.
 
 Related earlier chapters:
 
@@ -20,13 +20,20 @@ Related earlier chapters:
 |---|------|--------|
 | 1 | [`1_what_is_faiss.md`](./1_what_is_faiss.md) · [`faiss_demo.py`](./faiss_demo.py) · [`faiss_demo.md`](./faiss_demo.md) | FAISS concept + demo + explained notes |
 | 1b | [`FAISS_PROJECT/`](./FAISS_PROJECT/) (`rag.py` + `knowledge/`) | Same shape as topic-12 naive `rag.py` — **FAISS** replaces the cosine loop |
-| 2 | [`PROJECT_SEMANTIC_SEARCH/`](./PROJECT_SEMANTIC_SEARCH/) | One file — **semantic** only (`semantic_search.py` + `.md`, cosine + embeddings) |
-| 3 | [`PROJECT_KEYWORD_SEARCH/`](./PROJECT_KEYWORD_SEARCH/) | One file — **keyword** only (`keyword_search.py` + `.md`, word overlap) |
-| 4 | [`project/advanced_rag_project_flow.md`](./project/advanced_rag_project_flow.md) | **Combined** — Chroma + hybrid (0.7 semantic + 0.3 keyword) + rerank + answer |
+| 2 | [`PROJECT_SEMANTIC_SEARCH/`](./PROJECT_SEMANTIC_SEARCH/) | **Semantic** only |
+| 3 | [`PROJECT_KEYWORD_SEARCH/`](./PROJECT_KEYWORD_SEARCH/) | **Keyword** only |
+| 4 | [`HYBRID_PROJECT/`](./HYBRID_PROJECT/) | **Hybrid** — Chroma + 0.7 semantic + 0.3 keyword (no re-rank) |
+| 5 | [`RE_RANK_PROJECT/`](./RE_RANK_PROJECT/) | **Re-rank** — hybrid shortlist → LLM score → top 3 → answer |
 
-**Documents:** [`documents/`](./documents/) — `kubernetes.txt`, `python.txt`, `cpp.txt` (whole files; chunking later).
+**Documents:** [`documents/`](./documents/) — `kubernetes.txt`, `python.txt`, `cpp.txt` (shared by hybrid + re-rank).
 
-**Suggested path:** semantic lab → keyword lab → compare → full [`project/`](./project/) (`python main.py`).
+| Folder | Keep (core) | Not here |
+|--------|-------------|----------|
+| `HYBRID_PROJECT/` | `main` · `hybrid_rag` · `retriever` · `embeddings` · `chroma_store` · `chunker` · `generator` | no `reranker` |
+| `RE_RANK_PROJECT/` | `main` · `rerank_rag` · `reranker` · `generator` · slim `retriever` (`keyword_score` only) · shared store/embed/chunk | no lab-style `semantic_search` / `hybrid_search` helpers |
+
+**Suggested path:** semantic lab → keyword lab → [`HYBRID_PROJECT/`](./HYBRID_PROJECT/) → [`RE_RANK_PROJECT/`](./RE_RANK_PROJECT/).
 
 Start here if you are new to FAISS: [`1_what_is_faiss.md`](./1_what_is_faiss.md).  
-Start here for the full pipeline: [`project/advanced_rag_project_flow.md`](./project/advanced_rag_project_flow.md).
+Hybrid notes: [`HYBRID_PROJECT/hybrid_project_flow.md`](./HYBRID_PROJECT/hybrid_project_flow.md).  
+Re-rank notes: [`RE_RANK_PROJECT/re_rank_project_flow.md`](./RE_RANK_PROJECT/re_rank_project_flow.md).

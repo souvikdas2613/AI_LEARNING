@@ -206,7 +206,8 @@ If **Souvik** can learn it this way, you can too.
 
 - Chapter intro: [`22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/README.md`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/README.md) — FAISS · semantic lab · keyword lab · full `project/`  
 - Labs: [`PROJECT_SEMANTIC_SEARCH/semantic_search.py`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/PROJECT_SEMANTIC_SEARCH/semantic_search.py) · [`PROJECT_KEYWORD_SEARCH/keyword_search.py`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/PROJECT_KEYWORD_SEARCH/keyword_search.py) — one `.py` + `.md` each  
-- Full RAG: [`project/main.py`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/project/main.py) — hybrid + Chroma + rerank  
+- Hybrid RAG: [`HYBRID_PROJECT/main.py`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/HYBRID_PROJECT/main.py) — Chroma + hybrid (no re-rank)
+- Re-rank RAG: [`RE_RANK_PROJECT/main.py`](22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/RE_RANK_PROJECT/main.py) — hybrid shortlist + LLM re-rank  
 - Builds on: [`12_RAG_Retrieval_Augmented_Generation/`](12_RAG_Retrieval_Augmented_Generation/) · [`13_LANGCHAIN/10_embeddings_and_vector_store.md`](13_LANGCHAIN/10_embeddings_and_vector_store.md) · [`21_MEMORY_ENGINEERING/1_introduction_to_memory_engineering.md`](21_MEMORY_ENGINEERING/1_introduction_to_memory_engineering.md)
 
 ### Extra notes

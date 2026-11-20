@@ -3,7 +3,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from advanced_rag import build_rag, retrieve
+from hybrid_rag import build_rag, retrieve
 from generator import generate_answer
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
@@ -20,20 +20,17 @@ def main():
     paths = sorted(DOCUMENTS_DIR.glob("*.txt"))
     if not paths:
         raise SystemExit(f"No .txt files in {DOCUMENTS_DIR}")
-    print("Building RAG knowledge base (whole files, chunking off for now)...")
+    print("Building hybrid RAG knowledge base (whole files, chunking off for now)...")
     for path in paths:
         text = path.read_text(encoding="utf-8")
         build_rag(text, path.name, chunk=False)
         print(f"  indexed {path.name}")
-    print("\nAdvanced RAG is ready.")
+    print("\nHybrid RAG is ready (no re-rank).")
     while True:
         query = input("\nYou : ").strip()
         if query.lower() in {"exit", "quit"}:
             break
         results = retrieve(query, top_k=5)
-        print("\nRetrieved Sources Ranking:")
-        for result in results:
-            print(f"- {result['source']} (chunk {result['chunk_id']})")
         answer = generate_answer(query, results)
         print("\nRAG :")
         print(answer)

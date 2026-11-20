@@ -12,11 +12,11 @@ RAG has to **find the right text** before the LLM answers. Keyword (lexical) sea
 |------------|----------------|
 | **Exact tokens** | User names a command, error code, SKU, or API (`kubectl`, `RAII`, `OSAC-4795`). Embedding search can drift; **if the word is in the doc, keyword search can surface it**. |
 | **Fast and cheap** | No embedding API, no vector index — split strings, count overlap, sort. Good for **baselines**, tests, and offline labs (this folder). |
-| **Hybrid RAG** | [`../project/`](../project/) and many production stacks **blend** keyword score + semantic score so paraphrases *and* exact spellings both have a path to rank. This lab isolates the **keyword half** so you see it clearly. |
+| **Hybrid RAG** | [`../HYBRID_PROJECT/`](../HYBRID_PROJECT/) and many production stacks **blend** keyword score + semantic score so paraphrases *and* exact spellings both have a path to rank. This lab isolates the **keyword half** so you see it clearly. |
 | **Interpretable** | Score = “what fraction of my question words appear here?” You can explain a hit without a black-box model. |
 | **Complement to semantic** | Semantic search wins when the user **rephrases**; keyword wins when they **copy the same words** as the doc. See [`../PROJECT_SEMANTIC_SEARCH/semantic_search.md`](../PROJECT_SEMANTIC_SEARCH/semantic_search.md). |
 
-**Utility of *this* script:** a minimal teaching implementation of that idea — same overlap logic as the keyword path in [`../project/retriever.py`](../project/retriever.py), not production BM25.
+**Utility of *this* script:** a minimal teaching implementation of that idea — same overlap logic as the keyword path in [`../HYBRID_PROJECT/retriever.py`](../HYBRID_PROJECT/retriever.py), not production BM25.
 
 ---
 
@@ -38,7 +38,7 @@ RAG has to **find the right text** before the LLM answers. Keyword (lexical) sea
 ---
 
 **Semantic lab:** [`../PROJECT_SEMANTIC_SEARCH/semantic_search.md`](../PROJECT_SEMANTIC_SEARCH/semantic_search.md)  
-**Full hybrid pipeline:** [`../project/advanced_rag_project_flow.md`](../project/advanced_rag_project_flow.md)
+**Hybrid (combined):** [`../HYBRID_PROJECT/hybrid_project_flow.md`](../HYBRID_PROJECT/hybrid_project_flow.md)
 
 | File | Role |
 |------|------|
@@ -52,7 +52,7 @@ RAG has to **find the right text** before the LLM answers. Keyword (lexical) sea
 | `python.txt` | Python basics |
 | `cpp.txt` | C++ basics |
 
-Chunking comes later in [`../project/`](../project/) (`build_rag(..., chunk=True)`).
+Chunking comes later in [`../HYBRID_PROJECT/`](../HYBRID_PROJECT/) (`build_rag(..., chunk=True)`).
 
 ---
 
@@ -91,7 +91,7 @@ keyword_score = |matches| / |query_words|
 | **0.0** | No shared words |
 | **Higher is better** | Sort **descending**, take top-k |
 
-This is a **teaching** scorer (like `keyword_score` in [`project/retriever.py`](../project/retriever.py)), not full BM25.
+This is a **teaching** scorer (like `keyword_score` in [`HYBRID_PROJECT/retriever.py`](../HYBRID_PROJECT/retriever.py)), not full BM25.
 
 ---
 
@@ -183,7 +183,7 @@ Your recent edits add **typing import**, **`set[Any](...)`** on the query side, 
 |---------|------|----------------|
 | 1 | `from typing import Any` | Pulls `Any` from the type-hint module. Only used on line 39 below. |
 | 4 | `from pathlib import Path` | `Path` = file/folder paths without hard-coding OS slashes. |
-| 6 | `DOCUMENTS_DIR = Path(__file__).resolve().parents[1] / "documents"` | `__file__` is this `.py` file. `resolve()` makes it absolute. `parents[1]` goes **up two** folders (`PROJECT_KEYWORD_SEARCH` → `22_ADVANCED_RAG_...`), then into **`documents/`** (same folder as `project/`). |
+| 6 | `DOCUMENTS_DIR = Path(__file__).resolve().parents[1] / "documents"` | `__file__` is this `.py` file. `resolve()` makes it absolute. `parents[1]` goes **up two** folders (`PROJECT_KEYWORD_SEARCH` → `22_ADVANCED_RAG_...`), then into **`documents/`** (same folder as hybrid/re-rank projects). |
 | 8–12 | `DEMO_QUERIES = [...]` | Three fixed questions the demo runs automatically — one tuned to each `.txt` topic. |
 
 ### `load_documents()` (lines 15–28)
