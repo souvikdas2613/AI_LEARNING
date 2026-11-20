@@ -19,6 +19,7 @@ Related earlier chapters:
 | # | File | Topic |
 |---|------|--------|
 | 1 | [`1_what_is_faiss.md`](./1_what_is_faiss.md) · [`faiss_demo.py`](./faiss_demo.py) · [`faiss_demo.md`](./faiss_demo.md) | FAISS concept + demo + explained notes |
+| 1b | [`FAISS_PROJECT/`](./FAISS_PROJECT/) (`rag.py` + `knowledge/`) | Same shape as topic-12 naive `rag.py` — **FAISS** replaces the cosine loop |
 | 2 | [`PROJECT_SEMANTIC_SEARCH/`](./PROJECT_SEMANTIC_SEARCH/) | One file — **semantic** only (`semantic_search.py` + `.md`, cosine + embeddings) |
 | 3 | [`PROJECT_KEYWORD_SEARCH/`](./PROJECT_KEYWORD_SEARCH/) | One file — **keyword** only (`keyword_search.py` + `.md`, word overlap) |
 | 4 | [`project/advanced_rag_project_flow.md`](./project/advanced_rag_project_flow.md) | **Combined** — Chroma + hybrid (0.7 semantic + 0.3 keyword) + rerank + answer |
