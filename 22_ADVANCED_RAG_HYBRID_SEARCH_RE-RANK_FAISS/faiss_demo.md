@@ -46,7 +46,7 @@ You ask a question
     → print DOCS[row]   (show the actual text)
 ```
 
-**Main utility of the whole file:** show that **retrieval** in RAG is “**find the closest vectors**” — FAISS is the fast engine for that step. The LLM answer step is **not** in this file (that’s `project/main.py`).
+**Main utility of the whole file:** show that **retrieval** in RAG is “**find the closest vectors**” — FAISS is the fast engine for that step. The LLM answer step is **not** in this file (see `HYBRID_PROJECT/main.py` / `RE_RANK_PROJECT/main.py`).
 
 ---
 
@@ -260,7 +260,8 @@ Similar sentences should land near each other in embedding space, so a question 
 | Text in script | Ignored | `DOCS` + user question |
 | Teaches | FAISS API (`add`, `search`) | Same API + real RAG-style retrieval |
 
-Full Chroma + hybrid + rerank pipeline: [`project/advanced_rag_project_flow.md`](./project/advanced_rag_project_flow.md) and `python main.py` from [`project/`](./project/).
+Hybrid (no re-rank): [`HYBRID_PROJECT/hybrid_project_flow.md`](./HYBRID_PROJECT/hybrid_project_flow.md).  
+Re-rank pipeline: [`RE_RANK_PROJECT/re_rank_project_flow.md`](./RE_RANK_PROJECT/re_rank_project_flow.md).
 
 ---
 

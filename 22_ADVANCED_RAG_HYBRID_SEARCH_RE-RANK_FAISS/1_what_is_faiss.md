@@ -77,11 +77,11 @@ FAISS is commonly used as the **vector search component** in a **RAG** pipeline.
 pip install faiss-cpu numpy
 ```
 
-For **Part 2** you also need `openai`, `python-dotenv`, and `OPENAI_API_KEY` in `.env` — same as [`project/main.py`](./project/main.py). Part 2 embeds the strings in the `DOCS` list in [`faiss_demo.py`](./faiss_demo.py) (no import from `project/`).
+For **Part 2** you also need `openai`, `python-dotenv`, and `OPENAI_API_KEY` in `.env` — same as [`HYBRID_PROJECT/main.py`](./HYBRID_PROJECT/main.py). Part 2 embeds the strings in the `DOCS` list in [`faiss_demo.py`](./faiss_demo.py) (no import from the project folders).
 
 ### Hands-on script
 
-[`faiss_demo.py`](./faiss_demo.py) (chapter folder, not inside `project/`) runs two parts in one file.  
+[`faiss_demo.py`](./faiss_demo.py) (chapter folder, not inside `HYBRID_PROJECT/` / `RE_RANK_PROJECT/`) runs two parts in one file.  
 Line-by-line notes (including **`np.array`** and **why the toy numbers**): [`faiss_demo.md`](./faiss_demo.md).
 
 | Part | What it does |
@@ -105,7 +105,7 @@ Chroma and many vector DBs use similar math under the hood; FAISS exposes the in
 python faiss_demo.py
 ```
 
-Run from this chapter folder (`22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/`), not from `project/`.
+Run from this chapter folder (`22_ADVANCED_RAG_HYBRID_SEARCH_RE-RANK_FAISS/`), not from `HYBRID_PROJECT/` / `RE_RANK_PROJECT/`.
 
 ---
 
@@ -141,7 +141,7 @@ You already covered much of steps 1–2 and basic RAG in folder `12_RAG_Retrieva
 
 ## 6. Suggested project
 
-**Hands-on in this chapter:** [`project/advanced_rag_project_flow.md`](./project/advanced_rag_project_flow.md) (inside [`project/`](./project/)) — Chroma + hybrid retrieval + LLM rerank + answer. Note 1’s FAISS snippet is the minimal index; the project uses **Chroma** for the same retrieval stage at production-like scale.
+**Hands-on in this chapter:** [`HYBRID_PROJECT/`](./HYBRID_PROJECT/) (hybrid) then [`RE_RANK_PROJECT/`](./RE_RANK_PROJECT/) (LLM re-rank). Note 1’s FAISS snippet is the minimal index; those projects use **Chroma** for the same retrieval stage at production-like scale.
 
 **Stretch idea — OpenShift Documentation RAG**
 

@@ -14,9 +14,9 @@ Folder **`PROJECT_SEMANTIC_SEARCH`** — retrieve by **meaning** (OpenAI embeddi
 | `python.txt` | Python basics |
 | `cpp.txt` | C++ basics |
 
-Chunking comes later in [`../project/`](../project/).
+Chunking comes later in [`../HYBRID_PROJECT/`](../HYBRID_PROJECT/).
 
-**Full pipeline (hybrid + Chroma):** [`../project/advanced_rag_project_flow.md`](../project/advanced_rag_project_flow.md)
+**Hybrid (Chroma + blend):** [`../HYBRID_PROJECT/hybrid_project_flow.md`](../HYBRID_PROJECT/hybrid_project_flow.md)
 
 ---
 
@@ -28,7 +28,7 @@ Keyword search only sees **shared words**. RAG still has to find useful context 
 |------------|----------------|
 | **Meaning, not spelling** | “How do I define a function in Python?” can rank `python.txt` high even without copying exact sentences from the file. |
 | **Same stack as real RAG** | Embed chunks → store vectors → embed query → nearest neighbors. This lab does the same flow in memory (no Chroma/FAISS yet). |
-| **Hybrid RAG** | [`../project/advanced_rag_project_flow.md`](../project/advanced_rag_project_flow.md) blends **~0.7 semantic + ~0.3 keyword** so you get paraphrase **and** exact tokens. This folder isolates the **semantic half**. |
+| **Hybrid RAG** | [`../HYBRID_PROJECT/hybrid_project_flow.md`](../HYBRID_PROJECT/hybrid_project_flow.md) blends **~0.7 semantic + ~0.3 keyword**. This folder isolates the **semantic half**. |
 | **Teaches cosine + embeddings** | Same primitives as [`faiss_demo.py`](../faiss_demo.py) and topic **12** / **21** — only the index backend differs here (loop + numpy, not FAISS). |
 
 **Utility of *this* script:** offline-readable twin of the keyword lab — same three [`../documents/`](../documents/) files, same `DEMO_QUERIES`, so you can **compare** scores side by side.
@@ -69,7 +69,7 @@ More depth: [`text_embedding_3_small.md`](../../12_RAG_Retrieval_Augmented_Gener
 |----------|---------------------|
 | **Does cosine math match the formula?** | **Yes.** `dot(q,d) / (norm(q)*norm(d))` in `cosine_similarity()`. |
 | **Does top-1 usually match the right topic file?** | **Often yes** on the three demo queries — see [Sample run output](#sample-run-output-ranked-summary) and contrast with the [RAII keyword tie](../PROJECT_KEYWORD_SEARCH/keyword_search.md#worked-example--what-is-raii-in-c-insights). |
-| **Is it always “correct” for the user?** | **No.** Whole-file embedding **averages** all topics in one vector; chunking in [`../project/`](../project/) behaves differently. Wrong model, stale index, or ambiguous queries still give bad hits. |
+| **Is it always “correct” for the user?** | **No.** Whole-file embedding **averages** all topics in one vector; chunking in [`../HYBRID_PROJECT/`](../HYBRID_PROJECT/) behaves differently. Wrong model, stale index, or ambiguous queries still give bad hits. |
 | **Same as production search quality?** | **Teaching scope only** — no reranker, no hybrid keyword, no BM25, in-memory brute force (not FAISS at scale). |
 
 **Short verdict:** **stronger relevance signal than naive keyword overlap** for paraphrased questions; **not perfect** — use hybrid + chunking + optional rerank in the full project.
@@ -302,7 +302,7 @@ python semantic_search.py
 | RAII query | cpp **tied** with python | **cpp** ranked #1 |
 | Exact error code / SKU | Often good | May miss if wording differs |
 
-Full pipeline: **`0.7 × semantic + 0.3 × keyword`** in [`../project/`](../project/).
+Full pipeline: **`0.7 × semantic + 0.3 × keyword`** in [`../HYBRID_PROJECT/`](../HYBRID_PROJECT/).
 
 ---
 
