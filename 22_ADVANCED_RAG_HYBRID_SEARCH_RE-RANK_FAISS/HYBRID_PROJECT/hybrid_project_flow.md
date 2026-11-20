@@ -319,9 +319,9 @@ Hybrid RAG is ready (no re-rank).
 You : what is Python ?
 
 Hybrid candidates (semantic + keyword):
-- python.txt (chunk 0) semantic=0.539 keyword=0.500 combined=0.528
-- cpp.txt (chunk 0) semantic=0.393 keyword=0.250 combined=0.350
-- kubernetes.txt (chunk 0) semantic=0.366 keyword=0.250 combined=0.331
+- python.txt  semantic=0.539  keyword=0.500  combined=0.528
+- cpp.txt  semantic=0.393  keyword=0.250  combined=0.350
+- kubernetes.txt  semantic=0.366  keyword=0.250  combined=0.331
 
 RAG :
 Python is a high-level language known for readable syntax and a large standard library.

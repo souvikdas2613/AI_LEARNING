@@ -42,9 +42,9 @@ def retrieve(query, top_k=5):
     print("\nHybrid candidates (semantic + keyword):")
     for candidate in candidates:
         print(
-            f"- {candidate['source']} (chunk {candidate['chunk_id']}) "
-            f"semantic={candidate['semantic_score']:.3f} "
-            f"keyword={candidate['keyword_score']:.3f} "
+            f"- {candidate['source']}  "
+            f"semantic={candidate['semantic_score']:.3f}  "
+            f"keyword={candidate['keyword_score']:.3f}  "
             f"combined={candidate['combined_score']:.3f}"
         )
     return candidates
