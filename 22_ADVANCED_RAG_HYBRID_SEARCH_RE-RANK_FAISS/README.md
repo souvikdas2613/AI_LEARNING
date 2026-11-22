@@ -23,7 +23,7 @@ Related earlier chapters:
 | 2 | [`PROJECT_SEMANTIC_SEARCH/`](./PROJECT_SEMANTIC_SEARCH/) | **Semantic** only |
 | 3 | [`PROJECT_KEYWORD_SEARCH/`](./PROJECT_KEYWORD_SEARCH/) | **Keyword** only |
 | 4 | [`HYBRID_PROJECT/`](./HYBRID_PROJECT/) | **Hybrid** — Chroma + 0.7 semantic + 0.3 keyword (no re-rank) |
-| 5 | [`RE_RANK_PROJECT/`](./RE_RANK_PROJECT/) | **Re-rank** — hybrid shortlist → LLM score → top 3 → answer |
+| 5 | [`RE_RANK_PROJECT/`](./RE_RANK_PROJECT/) | **Re-rank** — hybrid shortlist → cross-encoder → top 3 → answer |
 
 **Documents:** [`documents/`](./documents/) — `kubernetes.txt`, `python.txt`, `cpp.txt` (shared by hybrid + re-rank).
 
@@ -36,4 +36,5 @@ Related earlier chapters:
 
 Start here if you are new to FAISS: [`1_what_is_faiss.md`](./1_what_is_faiss.md).  
 Hybrid notes: [`HYBRID_PROJECT/hybrid_project_flow.md`](./HYBRID_PROJECT/hybrid_project_flow.md).  
-Re-rank notes: [`RE_RANK_PROJECT/re_rank_project_flow.md`](./RE_RANK_PROJECT/re_rank_project_flow.md).
+Re-rank notes: [`RE_RANK_PROJECT/re_rank_project_flow.md`](./RE_RANK_PROJECT/re_rank_project_flow.md).  
+Cross-encoder model notes: [`RE_RANK_PROJECT/cross_encoder_explained.md`](./RE_RANK_PROJECT/cross_encoder_explained.md).

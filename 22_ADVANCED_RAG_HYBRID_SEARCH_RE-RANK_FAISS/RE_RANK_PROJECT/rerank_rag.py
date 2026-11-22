@@ -16,7 +16,7 @@ def build_rag(text, source, chunk=False):
 
 
 def retrieve(query, top_k=5):
-    """Hybrid shortlist, then LLM re-rank → top 3 for the prompt."""
+    """Hybrid shortlist, then cross-encoder re-rank → top 3 for the prompt."""
     query_embedding = create_embedding(query)
     semantic_results = search(query_embedding, top_k=top_k)
     candidates = []
@@ -48,5 +48,5 @@ def retrieve(query, top_k=5):
             f"keyword={candidate['keyword_score']:.3f}  "
             f"combined={candidate['combined_score']:.3f}"
         )
-    print(f"\n2) LLM re-rank → keep top 3 (scores 0–100)...")
+    print("\n2) Cross-encoder re-rank → keep top 3...")
     return rerank(query, candidates, top_k=3)

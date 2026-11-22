@@ -141,7 +141,7 @@ You already covered much of steps 1–2 and basic RAG in folder `12_RAG_Retrieva
 
 ## 6. Suggested project
 
-**Hands-on in this chapter:** [`HYBRID_PROJECT/`](./HYBRID_PROJECT/) (hybrid) then [`RE_RANK_PROJECT/`](./RE_RANK_PROJECT/) (LLM re-rank). Note 1’s FAISS snippet is the minimal index; those projects use **Chroma** for the same retrieval stage at production-like scale.
+**Hands-on in this chapter:** [`HYBRID_PROJECT/`](./HYBRID_PROJECT/) (hybrid) then [`RE_RANK_PROJECT/`](./RE_RANK_PROJECT/) (cross-encoder re-rank). Note 1’s FAISS snippet is the minimal index; those projects use **Chroma** for the same retrieval stage at production-like scale.
 
 **Stretch idea — OpenShift Documentation RAG**
 

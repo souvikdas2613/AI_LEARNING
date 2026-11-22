@@ -25,7 +25,7 @@ def main():
         text = path.read_text(encoding="utf-8")
         build_rag(text, path.name, chunk=False)
         print(f"  indexed {path.name}")
-    print("\nReady — hybrid shortlist, then LLM re-rank keeps top 3 for the prompt.")
+    print("\nReady — hybrid shortlist, then cross-encoder re-rank keeps top 3 for the prompt.")
     while True:
         query = input("\nYou : ").strip()
         if query.lower() in {"exit", "quit"}:
@@ -33,7 +33,7 @@ def main():
         results = retrieve(query, top_k=5)
         print("\n3) Winners after re-rank (enter the prompt):")
         for result in results:
-            print(f"- {result['source']}  rerank={result['rerank_score']:.1f}")
+            print(f"- {result['source']}  rerank={result['rerank_score']:.3f}")
         answer = generate_answer(query, results)
         print("\nRAG :")
         print(answer)
