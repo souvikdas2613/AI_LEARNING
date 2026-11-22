@@ -7,7 +7,7 @@ Learn the two signals separately first:
 - [`../PROJECT_SEMANTIC_SEARCH/semantic_search.md`](../PROJECT_SEMANTIC_SEARCH/semantic_search.md) — embeddings + cosine  
 - [`../PROJECT_KEYWORD_SEARCH/keyword_search.md`](../PROJECT_KEYWORD_SEARCH/keyword_search.md) — word overlap  
 
-Next step (LLM re-rank → lean prompt): [`../RE_RANK_PROJECT/re_rank_project_flow.md`](../RE_RANK_PROJECT/re_rank_project_flow.md)
+Next step (cross-encoder re-rank → lean prompt): [`../RE_RANK_PROJECT/re_rank_project_flow.md`](../RE_RANK_PROJECT/re_rank_project_flow.md)
 
 **Run this:** [`main.py`](./main.py)
 
@@ -32,7 +32,7 @@ Keyword alone misses paraphrases. Semantic alone can miss exact tokens (error co
 | **Chroma, not a Python loop** | Vectors live in `./chroma_db`; `search` is the semantic half |
 | **Teaching bridge** | After the two labs, before re-rank |
 
-**Utility of *this* folder:** one runnable chat loop that indexes whole files into Chroma, scores hybrid, and generates — without a second LLM re-rank pass.
+**Utility of *this* folder:** one runnable chat loop that indexes whole files into Chroma, scores hybrid, and generates — without a cross-encoder re-rank pass.
 
 ---
 
