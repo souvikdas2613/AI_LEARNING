@@ -23,10 +23,28 @@ Loads text files from `knowledge/`, embeds them with `text-embedding-3-small`, s
 
 ---
 
+## Prerequisite — get the FAISS package
+
+Python does **not** ship FAISS. You install Meta’s package from PyPI before `import faiss` works:
+
+```bash
+pip install faiss-cpu
+```
+
+| Package | What you get |
+|---------|----------------|
+| `faiss-cpu` | CPU build of FAISS (what this project uses) |
+| `faiss` (import name) | After install, `import faiss` in `rag.py` |
+
+Also need `numpy`, `openai`, and `python-dotenv` (same stack as the naive twin). Full one-liner is under [How to run](#how-to-run).
+
+---
+
 ## Index
 
 | # | Topic |
 |---|--------|
+| 0 | [Prerequisite — get the FAISS package](#prerequisite--get-the-faiss-package) |
 | 1 | [Naive vs this file](#naive-vs-this-file) |
 | 1b | [Did FAISS improve cosine similarity?](#did-faiss-improve-cosine-similarity) |
 | 1c | [What is L2 (Euclidean) distance?](#what-is-l2-euclidean-distance) |
@@ -367,6 +385,8 @@ Energy-aware path later: hybrid + re-rank + lean top 2–3 chunks (see `HYBRID_P
 ---
 
 ## How to run
+
+**Prerequisite:** install FAISS first (see [above](#prerequisite--get-the-faiss-package)) — without `faiss-cpu`, `import faiss` fails.
 
 ```bash
 pip install faiss-cpu numpy openai python-dotenv
