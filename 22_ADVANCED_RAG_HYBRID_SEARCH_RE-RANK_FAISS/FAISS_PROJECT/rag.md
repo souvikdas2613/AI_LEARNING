@@ -9,7 +9,7 @@ Walkthrough of [`rag.py`](./rag.py) in this folder (`FAISS_PROJECT`).
 ```text
 knowledge/*.txt  →  embed once at startup  →  FAISS index.add
 user question    →  embed
-FAISS index.search (top-k)  →  pick best file
+FAISS index.search (all docs)  →  print every L2  →  pick best file (rank 1)
 best file text + question  →  chat model  →  answer
 ```
 
@@ -19,7 +19,7 @@ Related: [`../1_what_is_faiss.md`](../1_what_is_faiss.md) · [`../faiss_demo.py`
 
 ## What this script does (one sentence)
 
-Loads text files from `knowledge/`, embeds them with `text-embedding-3-small`, stores the vectors in a **FAISS** index, and for each user message finds the nearest file with `index.search`, then asks a **chat** model to answer using only that file as context.
+Loads text files from `knowledge/`, embeds them with `text-embedding-3-small`, stores the vectors in a **FAISS** index, and for each user message runs `index.search` over **all** docs (prints every L2), then asks a **chat** model to answer using only the **rank-1** file as context.
 
 ---
 
@@ -140,16 +140,15 @@ Both can work for “nearest doc”; `IndexFlatL2` uses this L2 formula for you 
 | 1–6 | Imports (includes `faiss`) |
 | 8–11 | `load_dotenv` (chapter + cwd) + read `OPENAI_API_KEY` |
 | 13–17 | Embedding vs chat model + `OpenAI()` client |
-| 19–20 | `TOP_K` (1 = same as naive “best single doc”) |
-| 23–30 | `load_documents` |
-| 33–38 | `create_embedding` |
-| 41–48 | Load docs → ordered `filenames` → `float32` matrix |
-| 50–53 | **FAISS** `IndexFlatL2` → `add` → print size |
-| 55–57 | Banner |
-| 59–63 | Loop start + `quit` |
-| 65–73 | Embed question → `search` → print ranks → `best_document` |
-| 75–80 | `RAG_DOC_CONTENT` + build/print `prompt` |
-| 82–92 | Chat completion + print answer |
+| 19–26 | `load_documents` |
+| 29–34 | `create_embedding` |
+| 37–45 | Load docs → `filenames` (list) → `TOP_K = len(filenames)` → `vectors` (NumPy `float32`) |
+| 47–50 | **FAISS** `IndexFlatL2` → `add` → print size |
+| 52–54 | Banner |
+| 56–60 | Loop start + `quit` |
+| 62–70 | Embed question → `search` → print **all** L2 ranks → `best_document` |
+| 72–77 | `RAG_DOC_CONTENT` + build/print `prompt` |
+| 79–89 | Chat completion + print answer |
 
 ---
 
@@ -159,10 +158,10 @@ Both can work for “nearest doc”; `IndexFlatL2` uses this L2 formula for you 
 2. Load `.env`, set models, create `OpenAI()` client  
 3. Define `load_documents`, `create_embedding`  
 4. `documents = load_documents()`  
-5. Build `filenames` + embed every file into a NumPy `float32` matrix  
+5. Build `filenames` + set `TOP_K = len(filenames)` + embed every file into a NumPy `float32` matrix  
 6. Create FAISS index, `index.add(vectors)`  
 7. Print banner  
-8. Forever: `input` → quit? → embed question → `index.search` → map row → filename → print context → prompt → chat → answer  
+8. Forever: `input` → quit? → embed question → `index.search` → print every L2 rank → map best row → filename → print context → prompt → chat → answer  
 
 ---
 
@@ -197,8 +196,6 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 EMBEDDING_MODEL = "text-embedding-3-small"
 CHAT_MODEL = os.getenv("MODEL_NAME")
 client = OpenAI()
-
-TOP_K = 1
 ```
 
 | Piece | Meaning |
@@ -207,7 +204,8 @@ TOP_K = 1
 | Second `load_dotenv(override=True)` | Cwd / local `.env` can override |
 | `EMBEDDING_MODEL` | All `embeddings.create` calls |
 | `CHAT_MODEL` | Only `chat.completions.create` — from `MODEL_NAME` in `.env` |
-| `TOP_K = 1` | Return one nearest doc — apples-to-apples with naive “best file”. Raise later to show top-2/top-3 |
+
+`TOP_K` is set later (after `filenames`) to `len(filenames)` so the demo prints **every** doc’s L2 — like naive RAG printing every cosine score. The LLM still uses rank 1 only.
 
 ---
 
@@ -227,26 +225,45 @@ Same idea as naive RAG:
 ```python
 documents = load_documents()
 
+# Stable row order so FAISS index i ↔ filenames[i] ↔ documents[name]
 filenames = list(documents.keys())
+TOP_K = len(filenames)  # print L2 for every doc (best is still indices[0][0])
 vectors = np.array(
     [create_embedding(documents[name]) for name in filenames],
     dtype="float32",
 )
 ```
 
+FAISS only stores **numbers** (vectors). It does **not** store file names. So you keep two structures in the **same order**:
+
+| Name | Type | Array? | Role |
+|------|------|--------|------|
+| `filenames` | Python **list** of strings | List, not a NumPy array | File names in a fixed order |
+| `vectors` | NumPy **array** (`float32`) | Yes — 2D shape `(n_docs, dim)` | One embedding row per file, same order |
+| `TOP_K` | `int` | — | `len(filenames)` → search returns **all** docs so you can print every L2 |
+
+```python
+filenames = ["python.txt", "cpp.txt", ...]          # list
+vectors   = np.array([...], dtype="float32")        # array shape (N, 1536)
+```
+
 | Piece | Why it matters |
 |-------|----------------|
-| `filenames` | Stable row order: FAISS returns **row numbers**, not file names |
-| `np.array(..., dtype="float32")` | Shape `(n_docs, dim)` — what FAISS `add` / `search` need |
+| `filenames` | Stable row order: FAISS returns a **row index**, not a file name → later `filenames[row]` |
+| `vectors` | NumPy `float32` matrix — what FAISS `add` / `search` need |
+| `dtype="float32"` | What FAISS expects for the index |
+| Same order | Row `i` ↔ `filenames[i]` ↔ that file’s text |
 | Embed once at startup | Same as naive: don’t re-embed every file on every question |
 
-**Layman:** each document becomes one row in a table of numbers. Row `0` is `filenames[0]`, and so on.
+**Layman / slide one-liner:** Same order matters — FAISS row `i` ↔ `filenames[i]` ↔ document text.
+
+**Talk line:** `filenames` = list · `vectors` = NumPy array · lined up so search results can become file names again.
 
 ---
 
 ## Step 5 — FAISS in the middle
 
-Those three lines **build the search index** once at startup.
+Those lines **build the filing cabinet**, then file every document vector into it — once at startup.
 
 ```python
 index = faiss.IndexFlatL2(vectors.shape[1])
@@ -279,10 +296,21 @@ print(f"FAISS index ready: {index.ntotal} vectors, dim={vectors.shape[1]}")
 | Call | Meaning |
 |------|---------|
 | `IndexFlatL2(dim)` | Exact search with **L2 (Euclidean) distance**. `dim` = length of each embedding |
-| `index.add(vectors)` | Store all document vectors |
+| `index.add(vectors)` | Store all document vectors as rows |
 | `index.ntotal` | How many vectors are in the index |
 
-**Later in the loop:** embed the question → `index.search(query, k=1)` → get row indices + L2 distances → map row → filename → dump that file into the prompt.
+**Slide paste:**
+
+```text
+index = FAISS filing cabinet (IndexFlatL2 = exact L2 search)
+index.add(vectors) → store every doc embedding as a row
+index.ntotal       → how many vectors are in the index
+dim = vectors.shape[1]  (e.g. 1536 for text-embedding-3-small)
+```
+
+**One-liner:** Create empty FAISS index → add all vectors → ready to search.
+
+**Later in the loop:** embed the question → `index.search(query, k=TOP_K)` with `TOP_K = len(filenames)` → print **every** L2 → map best row → filename → dump that file into the prompt.
 
 This **replaces** the naive `for filename, embedding in document_embeddings.items(): cosine_similarity(...)` loop. Same “find nearest doc” job; here the loop lives inside FAISS instead of your Python cosine loop.
 
@@ -290,12 +318,15 @@ This **replaces** the naive `for filename, embedding in document_embeddings.item
 
 ---
 
-## Step 6 — Query loop: search → best doc → chat
+## Step 6 — Query loop: search → print all L2 → best doc → chat
 
 ```python
 question_embedding = create_embedding(user_input)
 query = np.array([question_embedding], dtype="float32")
 distances, indices = index.search(query, k=TOP_K)
+
+for rank, row in enumerate(indices[0]):
+    print(f"Rank {rank + 1}: {filenames[row]}  (L2 distance: {distances[0][rank]:.4f})")
 
 best_document = filenames[indices[0][0]]
 RAG_DOC_CONTENT = documents[best_document]
@@ -304,12 +335,36 @@ RAG_DOC_CONTENT = documents[best_document]
 | Piece | Meaning |
 |-------|---------|
 | `query` shape `(1, dim)` | FAISS always wants a **batch** of queries (even if batch size is 1) |
+| `TOP_K = len(filenames)` | Return **all** docs so the demo can print every L2 (teaching parallel to naive’s per-doc cosine scores) |
 | `distances` | L2 distances for the neighbors (**lower** is better) |
-| `indices` | Row numbers into `filenames` / `vectors` |
-| `indices[0][0]` | Best match for the first (only) query |
+| `indices` | Row numbers into `filenames` / `vectors` (best first) |
+| `indices[0][0]` | Best match for the first (only) query — still what the LLM uses |
 | Prompt + chat | Identical idea to naive: whole best file as `RAG_Context` |
 
-Then `client.chat.completions.create(...)` answers using only that context.
+### The print loop (why it exists)
+
+After `index.search`, FAISS returns:
+- `indices[0]` — row numbers of nearest docs (**best first**)
+- `distances[0]` — L2 distance for each of those rows (**lower = closer**)
+
+```python
+for rank, row in enumerate(indices[0]):
+    # rank = 0, 1, 2…  → print as Rank 1, 2, 3…
+    # row  = FAISS row index → filenames[row] is the file name
+    print(f"Rank {rank + 1}: {filenames[row]}  (L2 distance: {distances[0][rank]:.4f})")
+```
+
+**Example output**
+
+```text
+Rank 1: python.txt  (L2 distance: 0.8123)
+Rank 2: cpp.txt     (L2 distance: 1.2045)
+...
+```
+
+**Slide one-liner:** Loop over FAISS results → map row → file name → print L2 for each.
+
+Then `client.chat.completions.create(...)` answers using only the **rank-1** file as context.
 
 Type `quit` to exit.
 
@@ -376,7 +431,7 @@ So this `rag.py` is the **fair compare** to naive. The energy win shows up later
 ## Limits of this FAISS twin (on purpose)
 
 - Still dumps the **entire** best `.txt` into the prompt (same overspend habit as naive) — see section above.  
-- `TOP_K = 1` — no hybrid, no re-rank yet (those come later in this chapter).  
+- `TOP_K = len(filenames)` prints **all** L2 ranks for the demo; the LLM still uses only rank 1. No hybrid, no re-rank yet (those come later in this chapter). For a real app you might set `TOP_K = 1` (or a small k).  
 - `IndexFlatL2` is exact and simple — great for learning; huge corpora often use approximate indexes.  
 - No persistence: index is rebuilt in memory every run.
 
@@ -409,7 +464,10 @@ FAISS index ready: 4 vectors, dim=1536
 ========================================
 
 You : what is python ?
-Rank 1: python.txt  (L2 distance: 0.7979)
+Rank 1: python.txt              (L2 distance: 0.7979)
+Rank 2: machine_learning.txt   (L2 distance: 1.1024)
+Rank 3: mysql.txt              (L2 distance: 1.1856)
+Rank 4: weather.txt            (L2 distance: 1.3012)
 Best document: python.txt
 
 RAG_DOC_CONTENT: Python is a high-level programming language.
@@ -446,7 +504,7 @@ AI  : Goodbye! Have a great day.
 | Line | Meaning |
 |------|---------|
 | `4 vectors, dim=1536` | Four `knowledge/*.txt` files; each embedding has 1536 numbers (`text-embedding-3-small`) |
-| `Rank 1: python.txt (L2 …)` | FAISS nearest neighbor — **lower** L2 = closer |
-| `Best document` / `RAG_DOC_CONTENT` | Whole matching file (same fat-prompt habit as naive) |
+| `Rank 1…4` with L2 | Demo prints **every** doc (`TOP_K = len(filenames)`) — **lower** L2 = closer |
+| `Best document` / `RAG_DOC_CONTENT` | Still rank 1 only → whole matching file (same fat-prompt habit as naive) |
 | `AI_ASSISTANT_PROMPT` | Context + user text sent to the **chat** model |
 | `AI : …` | Answer grounded on that file only |

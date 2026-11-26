@@ -16,10 +16,6 @@ EMBEDDING_MODEL = "text-embedding-3-small"
 CHAT_MODEL = os.getenv("MODEL_NAME")
 client = OpenAI()
 
-# How many nearest docs FAISS should return (1 = same as naive “best doc”)
-TOP_K = 1
-
-
 def load_documents():
     documents = {}
     folder = Path(__file__).resolve().parent / "knowledge"
@@ -42,6 +38,7 @@ documents = load_documents()
 
 # Stable row order so FAISS index i ↔ filenames[i] ↔ documents[name]
 filenames = list(documents.keys())
+TOP_K = len(filenames)  # print L2 for every doc (best is still indices[0][0])
 vectors = np.array(
     [create_embedding(documents[name]) for name in filenames],
     dtype="float32",
